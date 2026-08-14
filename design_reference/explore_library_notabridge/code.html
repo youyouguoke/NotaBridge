@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NotaBridge - Library Explore</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#b9c7df",
+                        "surface-dim": "#d0dbed",
+                        "inverse-surface": "#27313f",
+                        "on-primary-fixed-variant": "#004395",
+                        "tertiary": "#006b2c",
+                        "outline-variant": "#c2c6d6",
+                        "on-secondary-container": "#57657a",
+                        "on-secondary": "#ffffff",
+                        "surface-container-high": "#dee9fc",
+                        "surface-tint": "#005ac2",
+                        "surface-container-low": "#eff4ff",
+                        "surface": "#f8f9ff",
+                        "background": "#f8f9ff",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f8f9ff",
+                        "on-tertiary-fixed": "#002109",
+                        "on-surface": "#121c2a",
+                        "surface-container-highest": "#d9e3f6",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed": "#001a42",
+                        "on-tertiary-container": "#f7fff2",
+                        "on-tertiary": "#ffffff",
+                        "primary": "#0058be",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#005320",
+                        "secondary-container": "#d5e3fc",
+                        "primary-fixed-dim": "#adc6ff",
+                        "error": "#ba1a1a",
+                        "secondary": "#515f74",
+                        "on-primary-container": "#fefcff",
+                        "on-background": "#121c2a",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#eaf1ff",
+                        "inverse-primary": "#adc6ff",
+                        "primary-container": "#2170e4",
+                        "surface-variant": "#d9e3f6",
+                        "tertiary-fixed": "#7ffc97",
+                        "surface-container": "#e6eeff",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed": "#d8e2ff",
+                        "on-surface-variant": "#424754",
+                        "secondary-fixed": "#d5e3fc",
+                        "outline": "#727785",
+                        "on-secondary-fixed": "#0d1c2e",
+                        "tertiary-fixed-dim": "#62df7d",
+                        "on-secondary-fixed-variant": "#3a485b",
+                        "tertiary-container": "#00873a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "margin-desktop": "64px",
+                        "xxl": "48px",
+                        "max-width": "1280px",
+                        "sm": "8px",
+                        "xs": "4px",
+                        "lg": "24px",
+                        "gutter": "24px",
+                        "md": "16px",
+                        "margin-mobile": "16px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "caption": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #FAF7F2; /* Warm paper background */
+            color: #1F2937; /* Ink-colored text */
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline flat no shadows docked full-width top-0 transition-all duration-200 ease-in-out">
+<div class="flex justify-between items-center px-margin-desktop w-full max-w-max-width mx-auto h-16">
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed-dim">
+                NotaBridge
+            </div>
+<nav class="hidden md:flex items-center space-x-lg">
+<a class="text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1 font-label-md text-label-md" href="#">Explore</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary-container dark:hover:text-primary-fixed hover:transition-colors font-label-md text-label-md" href="#">Library</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary-container dark:hover:text-primary-fixed hover:transition-colors font-label-md text-label-md" href="#">Practice</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary-container dark:hover:text-primary-fixed hover:transition-colors font-label-md text-label-md" href="#">Academy</a>
+</nav>
+<div class="flex items-center space-x-md">
+<button aria-label="notifications" class="text-secondary dark:text-secondary-fixed-dim hover:text-primary-container dark:hover:text-primary-fixed hover:transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button aria-label="settings" class="text-secondary dark:text-secondary-fixed-dim hover:text-primary-container dark:hover:text-primary-fixed hover:transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A small, circular avatar portrait of a user. The style is minimalist and clean, with a simple, solid colored background and a stylized silhouette of a person, fitting the modern educational aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAli1Ob53jOHcjLKFJ1z85xumWdVMl1gBbw7NvuzfnH7iUM-e7cEl8drmc_ffhHxV9l9erqur-rhFracX0usanZiC_4rIZbk2Q2tudLNIkXKqV6sbelh8d3LYXHx9bjkWRM4kGMB76kZY8D7NFNtgEZ71SuxLJbjuAd7EXjjrKG1GmSkXRIJHPJi0bQLJ7vPRJWp3Sr9nEAVwxWCpyGfEtDVW9yUDbNs2mG5Ky5WObBMWo3yiCXdsAD"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-xl flex flex-col space-y-xxl">
+<!-- Hero Section -->
+<section class="text-center max-w-3xl mx-auto space-y-lg py-xl">
+<h1 class="font-display-lg text-display-lg text-[#1F2937]">Explore Music in Two Notation Systems</h1>
+<p class="font-body-lg text-body-lg text-secondary">See how the same melody appears in numbered notation and staff notation. A bridge between traditional western theory and simplified structural learning.</p>
+</section>
+<!-- Library Grid -->
+<section>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Card 1: Ode to Joy -->
+<article class="bg-white rounded-[16px] border border-outline-variant p-[24px] space-y-lg hover:shadow-lg transition-shadow duration-300">
+<div class="space-y-sm">
+<div class="flex justify-between items-start">
+<h2 class="font-headline-md text-headline-md text-[#1F2937]">Ode to Joy</h2>
+<span class="bg-surface-variant text-on-surface-variant px-sm py-xs rounded-full font-caption text-caption">Public domain</span>
+</div>
+<p class="font-body-md text-body-md text-secondary">Ludwig van Beethoven</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md space-y-md">
+<!-- Numbered Notation Snippet -->
+<div>
+<p class="font-label-md text-label-md text-secondary mb-xs">Numbered Notation</p>
+<div class="font-mono text-lg text-[#1F2937] tracking-widest bg-white border border-outline-variant rounded p-sm text-center">
+                                3 3 4 5 | 5 4 3 2 | 1 1 2 3 | 3. 2 2 -
+                            </div>
+</div>
+<!-- Staff Notation Placeholder -->
+<div>
+<p class="font-label-md text-label-md text-secondary mb-xs">Staff Notation</p>
+<div class="bg-white border border-outline-variant rounded p-sm h-16 flex items-center justify-center relative overflow-hidden">
+<!-- Abstract lines representing staff -->
+<div class="w-full h-px bg-[#1F2937] opacity-20 absolute top-2"></div>
+<div class="w-full h-px bg-[#1F2937] opacity-20 absolute top-5"></div>
+<div class="w-full h-px bg-[#1F2937] opacity-20 absolute top-8"></div>
+<div class="w-full h-px bg-[#1F2937] opacity-20 absolute top-11"></div>
+<div class="w-full h-px bg-[#1F2937] opacity-20 absolute top-14"></div>
+<span class="material-symbols-outlined text-[#1F2937] absolute left-2 top-2" style="font-size: 40px;">music_note</span>
+<span class="text-secondary font-caption text-caption z-10 bg-white px-2">Preview Snippet</span>
+</div>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary font-label-md text-label-md py-sm rounded-lg hover:bg-primary-container transition-colors flex items-center justify-center space-x-2">
+<span>Start Learning</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</article>
+<!-- Card 2: Amazing Grace -->
+<article class="bg-white rounded-[16px] border border-outline-variant p-[24px] space-y-lg hover:shadow-lg transition-shadow duration-300">
+<div class="space-y-sm">
+<div class="flex justify-between items-start">
+<h2 class="font-headline-md text-headline-md text-[#1F2937]">Amazing Grace</h2>
+<span class="bg-surface-variant text-on-surface-variant px-sm py-xs rounded-full font-caption text-caption">Public domain</span>
+</div>
+<p class="font-body-md text-body-md text-secondary">Traditional</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md space-y-md">
+<div>
+<p class="font-label-md text-label-md text-secondary mb-xs">Numbered Notation</p>
+<div class="font-mono text-lg text-[#1F2937] tracking-widest bg-white border border-outline-variant rounded p-sm text-center">
+                                5 | 1 3 1 | 3 2 | 1 6 | 5
+                            </div>
+</div>
+<div>
+<p class="font-label-md text-label-md text-secondary mb-xs">Staff Notation</p>
+<div class="bg-white border border-outline-variant rounded p-sm h-16 flex items-center justify-center relative overflow-hidden">
+<div class="w-full h-px bg-[#1F2937] opacity-20 absolute top-2"></div>
+<div class="w-full h-px bg-[#1F2937] opacity-20 absolute top-5"></div>
+<div class="w-full h-px bg-[#1F2937] opacity-20 absolute top-8"></div>
+<div class="w-full h-px bg-[#1F2937] opacity-20 absolute top-11"></div>
+<div class="w-full h-px bg-[#1F2937] opacity-20 absolute top-14"></div>
+<span class="material-symbols-outlined text-[#1F2937] absolute left-2 top-2" style="font-size: 40px;">music_note</span>
+<span class="text-secondary font-caption text-caption z-10 bg-white px-2">Preview Snippet</span>
+</div>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary font-label-md text-label-md py-sm rounded-lg hover:bg-primary-container transition-colors flex items-center justify-center space-x-2">
+<span>Start Learning</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</article>
+<!-- Card 3: Twinkle Twinkle Little Star -->
+<article class="bg-white rounded-[16px] border border-outline-variant p-[24px] space-y-lg hover:shadow-lg transition-shadow duration-300">
+<div class="space-y-sm">
+<div class="flex justify-between items-start">
+<h2 class="font-headline-md text-headline-md text-[#1F2937]">Twinkle Twinkle</h2>
+<span class="bg-surface-variant text-on-surface-variant px-sm py-xs rounded-full font-caption text-caption">Public domain</span>
+</div>
+<p class="font-body-md text-body-md text-secondary">Traditional</p>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-md space-y-md">
+<div>
+<p class="font-label-md text-label-md text-secondary mb-xs">Numbered Notation</p>
+<div class="font-mono text-lg text-[#1F2937] tracking-widest bg-white border border-outline-variant rounded p-sm text-center">
+                                1 1 5 5 | 6 6 5 - | 4 4 3 3 | 2 2 1 -
+                            </div>
+</div>
+<div>
+<p class="font-label-md text-label-md text-secondary mb-xs">Staff Notation</p>
+<div class="bg-white border border-outline-variant rounded p-sm h-16 flex items-center justify-center relative overflow-hidden">
+<div class="w-full h-px bg-[#1F2937] opacity-20 absolute top-2"></div>
+<div class="w-full h-px bg-[#1F2937] opacity-20 absolute top-5"></div>
+<div class="w-full h-px bg-[#1F2937] opacity-20 absolute top-8"></div>
+<div class="w-full h-px bg-[#1F2937] opacity-20 absolute top-11"></div>
+<div class="w-full h-px bg-[#1F2937] opacity-20 absolute top-14"></div>
+<span class="material-symbols-outlined text-[#1F2937] absolute left-2 top-2" style="font-size: 40px;">music_note</span>
+<span class="text-secondary font-caption text-caption z-10 bg-white px-2">Preview Snippet</span>
+</div>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary font-label-md text-label-md py-sm rounded-lg hover:bg-primary-container transition-colors flex items-center justify-center space-x-2">
+<span>Start Learning</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</article>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant dark:border-outline full-width flat no shadows transition-opacity duration-300 mt-auto">
+<div class="w-full py-xl px-margin-desktop flex flex-col md:flex-row justify-between items-center max-w-max-width mx-auto space-y-md md:space-y-0">
+<div class="font-headline-md text-headline-md font-bold text-primary">
+                NotaBridge
+            </div>
+<div class="font-body-md text-body-md text-secondary dark:text-secondary-fixed-dim text-center">
+                © 2024 NotaBridge Music Education. Digital Parchment System.
+            </div>
+<nav class="flex space-x-lg font-body-md text-body-md">
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed underline transition-colors" href="#">Terms of Service</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed underline transition-colors" href="#">Privacy Policy</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed underline transition-colors" href="#">Curriculum Guide</a>
+</nav>
+</div>
+</footer>
+</body></html>

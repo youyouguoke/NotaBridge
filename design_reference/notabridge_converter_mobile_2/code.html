@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NotaBridge Converter Workspace</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed": "#001a42",
+                      "tertiary": "#006b2c",
+                      "secondary-fixed-dim": "#b9c7df",
+                      "surface-tint": "#005ac2",
+                      "surface-container-lowest": "#ffffff",
+                      "inverse-on-surface": "#eaf1ff",
+                      "primary-container": "#2170e4",
+                      "error-container": "#ffdad6",
+                      "surface-container": "#e6eeff",
+                      "surface-container-high": "#dee9fc",
+                      "tertiary-fixed-dim": "#62df7d",
+                      "on-error": "#ffffff",
+                      "tertiary-container": "#00873a",
+                      "on-tertiary-fixed": "#002109",
+                      "on-surface": "#121c2a",
+                      "on-secondary-fixed-variant": "#3a485b",
+                      "surface-variant": "#d9e3f6",
+                      "inverse-primary": "#adc6ff",
+                      "secondary": "#515f74",
+                      "on-primary-container": "#fefcff",
+                      "secondary-fixed": "#d5e3fc",
+                      "surface-container-highest": "#d9e3f6",
+                      "primary": "#0058be",
+                      "tertiary-fixed": "#7ffc97",
+                      "outline": "#727785",
+                      "on-background": "#121c2a",
+                      "on-secondary-fixed": "#0d1c2e",
+                      "on-tertiary": "#ffffff",
+                      "outline-variant": "#c2c6d6",
+                      "on-tertiary-container": "#f7fff2",
+                      "surface-bright": "#f8f9ff",
+                      "background": "#f8f9ff",
+                      "secondary-container": "#d5e3fc",
+                      "on-surface-variant": "#424754",
+                      "surface-container-low": "#eff4ff",
+                      "inverse-surface": "#27313f",
+                      "primary-fixed": "#d8e2ff",
+                      "on-primary-fixed-variant": "#004395",
+                      "on-error-container": "#93000a",
+                      "on-secondary-container": "#57657a",
+                      "error": "#ba1a1a",
+                      "on-secondary": "#ffffff",
+                      "surface-dim": "#d0dbed",
+                      "surface": "#f8f9ff",
+                      "on-primary": "#ffffff",
+                      "on-tertiary-fixed-variant": "#005320",
+                      "primary-fixed-dim": "#adc6ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "sm": "8px",
+                      "xxl": "48px",
+                      "lg": "24px",
+                      "xl": "32px",
+                      "md": "16px",
+                      "xs": "4px",
+                      "margin-mobile": "16px",
+                      "base": "4px",
+                      "max-width": "1280px",
+                      "margin-desktop": "64px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "caption": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "caption": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-[#FAF7F2] text-on-surface font-body-md min-h-screen overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant flat no shadows">
+<div class="flex items-center justify-between px-margin-mobile h-16 w-full max-w-max-width mx-auto">
+<button class="hover:bg-surface-container-high transition-colors duration-200 active:scale-95 transition-transform p-2 rounded-full">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md text-primary font-bold">NotaBridge</h1>
+<div class="w-10 h-10 rounded-full bg-surface-variant flex items-center justify-center overflow-hidden hover:bg-surface-container-high transition-colors duration-200 active:scale-95 transition-transform cursor-pointer">
+<span class="material-symbols-outlined text-on-surface-variant">person</span>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-margin-mobile max-w-max-width mx-auto flex flex-col gap-lg">
+<!-- Workspace Header -->
+<div class="mb-sm">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Workspace</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Convert numbered notation to standard staff.</p>
+</div>
+<!-- Input Area -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-lg shadow-sm">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-headline-md text-headline-md text-on-surface">Enter Numbered Notation</h3>
+<div class="flex gap-sm">
+<span class="bg-surface-variant text-on-surface-variant font-caption text-caption px-2 py-1 rounded-sm">Key: C</span>
+<span class="bg-surface-variant text-on-surface-variant font-caption text-caption px-2 py-1 rounded-sm">4/4</span>
+</div>
+</div>
+<div class="relative">
+<textarea class="w-full h-32 bg-surface-container-lowest border border-outline-variant rounded-lg p-md font-body-lg text-body-lg text-on-surface focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 resize-none transition-all" placeholder="e.g. 1 2 3 4 | 5 5 5 - |">1 1 5 5 | 6 6 5 - | 4 4 3 3 | 2 2 1 -</textarea>
+<button class="absolute bottom-md right-md text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">backspace</span>
+</button>
+</div>
+<div class="mt-md flex justify-end">
+<button class="bg-primary text-on-primary font-label-md text-label-md px-lg py-sm rounded-lg hover:bg-surface-tint transition-colors active:scale-95 flex items-center gap-xs">
+<span class="material-symbols-outlined">sync</span>
+                    Convert
+                </button>
+</div>
+</section>
+<!-- Previews -->
+<div class="flex flex-col gap-md">
+<!-- Numbered Preview -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-lg shadow-sm">
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-md uppercase tracking-wider">Notation Preview</h3>
+<div class="flex items-center justify-center p-md bg-surface-bright rounded-lg border border-outline-variant/50 min-h-[80px]">
+<p class="font-headline-md text-headline-md tracking-[0.5em] text-[#1F2937]">1 1 5 5 | 6 6 5 -</p>
+</div>
+</section>
+<!-- Staff Preview -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-lg shadow-sm">
+<h3 class="font-label-md text-label-md text-on-surface-variant mb-md uppercase tracking-wider">Staff Result</h3>
+<div class="flex items-center justify-center p-md bg-surface-bright rounded-lg border border-outline-variant/50 min-h-[120px] relative">
+<!-- Faux Staff Lines -->
+<div class="absolute inset-0 flex flex-col justify-center items-center py-6 px-md w-full h-full space-y-[8px] opacity-20 pointer-events-none">
+<div class="w-full h-px bg-[#1F2937]"></div>
+<div class="w-full h-px bg-[#1F2937]"></div>
+<div class="w-full h-px bg-[#1F2937]"></div>
+<div class="w-full h-px bg-[#1F2937]"></div>
+<div class="w-full h-px bg-[#1F2937]"></div>
+</div>
+<!-- Faux Notes -->
+<div class="z-10 flex gap-4 text-[#1F2937]">
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">music_note</span>
+<span class="material-symbols-outlined text-[32px]" style="font-variation-settings: 'FILL' 1;">music_note</span>
+<span class="material-symbols-outlined text-[32px] translate-y-[-16px]" style="font-variation-settings: 'FILL' 1;">music_note</span>
+<span class="material-symbols-outlined text-[32px] translate-y-[-16px]" style="font-variation-settings: 'FILL' 1;">music_note</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Actions -->
+<div class="mt-lg">
+<button class="w-full bg-primary text-on-primary font-label-md text-label-md px-lg py-md rounded-lg hover:bg-surface-tint transition-colors active:scale-95 flex items-center justify-center gap-sm shadow-sm">
+<span class="material-symbols-outlined">picture_as_pdf</span>
+                Export PDF
+            </button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-xl bg-surface-container-low border-t border-outline-variant shadow-sm pb-safe">
+<div class="flex justify-around items-center px-4 py-2">
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 tap-highlight-transparent active:opacity-80 transition-all" href="#">
+<span class="material-symbols-outlined mb-xs">edit_note</span>
+<span class="font-label-md text-label-md font-bold">Workspace</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-secondary-container hover:bg-surface-container-highest transition-all tap-highlight-transparent active:opacity-80 rounded-full px-4 py-1" href="#">
+<span class="material-symbols-outlined mb-xs">library_music</span>
+<span class="font-label-md text-label-md">Library</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-secondary-container hover:bg-surface-container-highest transition-all tap-highlight-transparent active:opacity-80 rounded-full px-4 py-1" href="#">
+<span class="material-symbols-outlined mb-xs">school</span>
+<span class="font-label-md text-label-md">Learn</span>
+</a>
+</div>
+</nav>
+</body></html>

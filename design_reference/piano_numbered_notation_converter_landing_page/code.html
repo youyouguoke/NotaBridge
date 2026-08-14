@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Piano Numbered Notation Converter - NotaBridge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error-container": "#ffdad6",
+                      "tertiary-fixed-dim": "#62df7d",
+                      "on-surface-variant": "#424754",
+                      "surface-container": "#e6eeff",
+                      "primary-fixed": "#d8e2ff",
+                      "on-error-container": "#93000a",
+                      "tertiary-fixed": "#7ffc97",
+                      "on-tertiary-fixed": "#002109",
+                      "surface-bright": "#f8f9ff",
+                      "primary": "#0058be",
+                      "on-surface": "#121c2a",
+                      "on-background": "#121c2a",
+                      "on-tertiary-fixed-variant": "#005320",
+                      "outline-variant": "#c2c6d6",
+                      "surface-variant": "#d9e3f6",
+                      "on-error": "#ffffff",
+                      "primary-container": "#2170e4",
+                      "tertiary": "#006b2c",
+                      "on-secondary-fixed-variant": "#3a485b",
+                      "surface-dim": "#d0dbed",
+                      "secondary-fixed-dim": "#b9c7df",
+                      "surface-container-highest": "#d9e3f6",
+                      "primary-fixed-dim": "#adc6ff",
+                      "inverse-on-surface": "#eaf1ff",
+                      "on-tertiary-container": "#f7fff2",
+                      "on-secondary": "#ffffff",
+                      "secondary": "#515f74",
+                      "surface-tint": "#005ac2",
+                      "on-primary": "#ffffff",
+                      "on-primary-fixed": "#001a42",
+                      "surface-container-low": "#eff4ff",
+                      "surface": "#f8f9ff",
+                      "inverse-primary": "#adc6ff",
+                      "secondary-container": "#d5e3fc",
+                      "surface-container-high": "#dee9fc",
+                      "on-primary-fixed-variant": "#004395",
+                      "on-primary-container": "#fefcff",
+                      "background": "#f8f9ff",
+                      "error": "#ba1a1a",
+                      "on-secondary-fixed": "#0d1c2e",
+                      "surface-container-lowest": "#ffffff",
+                      "on-tertiary": "#ffffff",
+                      "secondary-fixed": "#d5e3fc",
+                      "outline": "#727785",
+                      "tertiary-container": "#00873a",
+                      "inverse-surface": "#27313f",
+                      "on-secondary-container": "#57657a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "sm": "8px",
+                      "xs": "4px",
+                      "gutter": "24px",
+                      "max-width": "1280px",
+                      "md": "16px",
+                      "lg": "24px",
+                      "margin-desktop": "64px",
+                      "xl": "32px",
+                      "base": "4px",
+                      "xxl": "48px",
+                      "margin-mobile": "16px"
+              },
+              "fontFamily": {
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "caption": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "headline-lg": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "headline-lg-mobile": [
+                              "Inter"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "caption": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "36px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: #FAF7F2;
+            color: #1F2937;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col font-body-md text-body-md">
+<!-- TopNavBar -->
+<nav class="bg-surface dark:bg-surface-dim docked full-width top-0 border-b border-outline-variant dark:border-outline fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop h-16 max-w-max-width mx-auto">
+<div class="flex items-center">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">NotaBridge</span>
+</div>
+<div class="hidden md:flex gap-lg items-center">
+<a class="text-primary dark:text-primary-fixed border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Converter</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed transition-colors font-label-md text-label-md" href="#">Compare</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed transition-colors font-label-md text-label-md" href="#">Learn</a>
+</div>
+<button class="bg-[#3B82F6] text-white px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors hidden md:block">Get Started</button>
+<!-- Mobile Menu Icon -->
+<div class="md:hidden">
+<span class="material-symbols-outlined text-on-surface">menu</span>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="flex-grow pt-[80px] pb-xxl px-margin-mobile md:px-margin-desktop max-w-max-width mx-auto w-full flex flex-col gap-xxl">
+<!-- Hero Section -->
+<section class="flex flex-col items-center text-center pt-xxl">
+<h1 class="font-display-lg text-display-lg md:font-display-lg md:text-display-lg text-on-surface mb-lg max-w-3xl leading-tight">Piano Numbered Notation Converter</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mb-xl">Convert piano numbered notation into sheet music online instantly. Perfect for beginners and self-taught pianists.</p>
+<div class="flex flex-col sm:flex-row gap-md w-full sm:w-auto">
+<button class="bg-[#3B82F6] text-white px-8 py-3 rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors">Open Converter</button>
+<button class="bg-transparent border border-outline text-on-surface px-8 py-3 rounded-lg font-label-md text-label-md hover:bg-surface-variant transition-colors">How it Works</button>
+</div>
+</section>
+<!-- Embedded Preview Section -->
+<section class="w-full">
+<div class="bg-white rounded-2xl border border-outline-variant p-lg md:p-xl shadow-[0_10px_15px_-3px_rgba(31,41,55,0.04)]">
+<div class="mb-lg">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-xs">Interactive Converter Preview</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Type your piano numbers below to see how they map to the staff.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg bg-surface-container-lowest border border-outline-variant rounded-lg p-md">
+<!-- Left Side: Input -->
+<div class="flex flex-col">
+<label class="font-label-md text-label-md text-on-surface-variant mb-xs">Numbered Notation Input</label>
+<div class="bg-white border border-[#D1D5DB] rounded-lg p-md h-48 font-mono text-body-md text-[#1F2937] focus-within:border-[#3B82F6] focus-within:ring-2 focus-within:ring-[#3B82F6]/20 transition-all flex items-start">
+<span class="mr-2">1 3 5 | 1' 5 3 | 1</span>
+<span class="animate-pulse w-px h-5 bg-[#3B82F6] inline-block"></span>
+</div>
+</div>
+<!-- Right Side: Output -->
+<div class="flex flex-col">
+<label class="font-label-md text-label-md text-on-surface-variant mb-xs">Staff Preview</label>
+<div class="bg-white border border-outline-variant rounded-lg p-md h-48 flex items-center justify-center relative overflow-hidden">
+<!-- Abstract staff notation representation -->
+<div class="w-full h-full flex flex-col justify-center gap-2 opacity-80">
+<div class="w-full h-px bg-[#1F2937]"></div>
+<div class="w-full h-px bg-[#1F2937]"></div>
+<div class="w-full h-px bg-[#1F2937]"></div>
+<div class="w-full h-px bg-[#1F2937]"></div>
+<div class="w-full h-px bg-[#1F2937]"></div>
+<!-- Notes mapping to 1 3 5 1' 5 3 1 (C E G C' G E C) -->
+<div class="absolute left-1/4 top-[65%] w-3 h-3 bg-[#1F2937] rounded-full"></div>
+<div class="absolute left-[35%] top-[55%] w-3 h-3 bg-[#1F2937] rounded-full"></div>
+<div class="absolute left-[45%] top-[45%] w-3 h-3 bg-[#1F2937] rounded-full"></div>
+<div class="absolute left-[55%] top-[25%] w-3 h-3 bg-[#1F2937] rounded-full"></div>
+<div class="absolute left-[65%] top-[45%] w-3 h-3 bg-[#1F2937] rounded-full"></div>
+<div class="absolute left-[75%] top-[55%] w-3 h-3 bg-[#1F2937] rounded-full"></div>
+<div class="absolute left-[85%] top-[65%] w-3 h-3 bg-[#1F2937] rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Educational Section -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-xl items-center">
+<div>
+<h2 class="font-headline-lg text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-md">How Piano Players Use Numbered Notation</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-md">Numbered notation, also known as Jianpu, is a popular way to quickly jot down melodies. For pianists, it represents the degrees of the scale, making it easier to transpose and understand melodic structure before moving to standard staff notation.</p>
+<div class="flex gap-2">
+<span class="bg-[#F3F4F6] text-[#1F2937] font-caption text-caption px-2 py-1 rounded">C Major</span>
+<span class="bg-[#F3F4F6] text-[#1F2937] font-caption text-caption px-2 py-1 rounded">Beginner Friendly</span>
+</div>
+</div>
+<div class="bg-white rounded-2xl border border-outline-variant p-lg shadow-[0_10px_15px_-3px_rgba(31,41,55,0.04)]">
+<div class="flex flex-col gap-md">
+<div class="border-b border-outline-variant pb-sm">
+<span class="font-label-md text-label-md text-on-surface-variant block mb-2">Numbered Notation</span>
+<div class="font-mono text-headline-md text-on-surface">1 1 5 5 | 6 6 5 - |</div>
+</div>
+<div class="pt-sm">
+<span class="font-label-md text-label-md text-on-surface-variant block mb-2">Standard Staff</span>
+<div class="h-24 w-full flex flex-col justify-center gap-2 relative border border-transparent">
+<div class="w-full h-px bg-[#1F2937]"></div>
+<div class="w-full h-px bg-[#1F2937]"></div>
+<div class="w-full h-px bg-[#1F2937]"></div>
+<div class="w-full h-px bg-[#1F2937]"></div>
+<div class="w-full h-px bg-[#1F2937]"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="max-w-3xl mx-auto w-full">
+<h2 class="font-headline-lg text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-center text-on-surface mb-xl">Piano Notation FAQ</h2>
+<div class="flex flex-col gap-md">
+<!-- FAQ Item 1 -->
+<div class="bg-white rounded-2xl border border-outline-variant p-lg shadow-[0_10px_15px_-3px_rgba(31,41,55,0.04)] cursor-pointer hover:border-primary transition-colors">
+<div class="flex justify-between items-center mb-sm">
+<h3 class="font-headline-md text-headline-md text-on-surface">Can piano numbered notation become sheet music?</h3>
+<span class="material-symbols-outlined text-primary">expand_more</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Yes, with NotaBridge, you can instantly transform any numbered sequence into standard Western staff notation ready for printing or practice.</p>
+</div>
+<!-- FAQ Item 2 -->
+<div class="bg-white rounded-2xl border border-outline-variant p-lg shadow-[0_10px_15px_-3px_rgba(31,41,55,0.04)] cursor-pointer hover:border-primary transition-colors">
+<div class="flex justify-between items-center mb-sm">
+<h3 class="font-headline-md text-headline-md text-on-surface">How do I read piano numbers?</h3>
+<span class="material-symbols-outlined text-primary">expand_more</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">In the key of C Major, 1 corresponds to C, 2 to D, and so on. Piano numbers represent the scale degrees of your current key.</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low dark:bg-surface-dim border-t border-outline-variant dark:border-outline full-width w-full py-xxl px-margin-desktop flex flex-col md:flex-row justify-between items-start gap-lg max-w-max-width mx-auto">
+<div class="flex flex-col gap-sm">
+<span class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">NotaBridge</span>
+<span class="font-caption text-caption text-on-surface-variant dark:text-secondary-fixed-dim">© 2024 NotaBridge. Empowering pianists through simplified notation.</span>
+</div>
+<div class="flex flex-wrap gap-x-lg gap-y-sm">
+<a class="font-caption text-caption text-primary dark:text-primary-fixed font-bold hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">Converter</a>
+<a class="font-caption text-caption text-on-surface-variant dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">Compare</a>
+<a class="font-caption text-caption text-on-surface-variant dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">Learn</a>
+<a class="font-caption text-caption text-on-surface-variant dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">Piano Basics</a>
+<a class="font-caption text-caption text-on-surface-variant dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">Sheet Music Guide</a>
+<a class="font-caption text-caption text-on-surface-variant dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed transition-colors" href="#">Privacy Policy</a>
+</div>
+</footer>
+</body></html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>What is Jianpu? | NotaBridge Educational Series</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-background": "#1F2937",
+                    "surface-container": "#e6eeff",
+                    "background": "#FAF7F2",
+                    "on-tertiary": "#ffffff",
+                    "surface-tint": "#3B82F6",
+                    "tertiary-container": "#00873a",
+                    "tertiary-fixed-dim": "#62df7d",
+                    "on-secondary-fixed": "#0d1c2e",
+                    "on-secondary-container": "#57657a",
+                    "on-tertiary-fixed": "#002109",
+                    "on-error-container": "#93000a",
+                    "surface-variant": "#E5E7EB",
+                    "surface-container-lowest": "#ffffff",
+                    "on-primary-fixed-variant": "#004395",
+                    "tertiary-fixed": "#7ffc97",
+                    "outline": "#D1D5DB",
+                    "on-surface": "#1F2937",
+                    "surface-container-highest": "#d9e3f6",
+                    "on-error": "#ffffff",
+                    "primary": "#3B82F6",
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "primary-fixed-dim": "#adc6ff",
+                    "secondary": "#475569",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed-variant": "#005320",
+                    "on-surface-variant": "#475569",
+                    "on-tertiary-container": "#f7fff2",
+                    "on-secondary": "#ffffff",
+                    "tertiary": "#006b2c",
+                    "primary-fixed": "#d8e2ff",
+                    "inverse-surface": "#27313f",
+                    "surface-container-high": "#dee9fc",
+                    "surface-bright": "#f8f9ff",
+                    "primary-container": "#EFF6FF",
+                    "surface": "#FFFFFF",
+                    "secondary-fixed-dim": "#b9c7df",
+                    "error-container": "#ffdad6",
+                    "secondary-container": "#F3F4F6",
+                    "on-secondary-fixed-variant": "#3a485b",
+                    "surface-dim": "#d0dbed",
+                    "surface-container-low": "#eff4ff",
+                    "on-primary-fixed": "#001a42",
+                    "outline-variant": "#E5E7EB",
+                    "inverse-primary": "#adc6ff",
+                    "on-primary-container": "#1E3A8A",
+                    "secondary-fixed": "#d5e3fc"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "1rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "xs": "4px",
+                    "md": "16px",
+                    "margin-desktop": "64px",
+                    "max-width": "1280px",
+                    "xxl": "48px",
+                    "xl": "32px",
+                    "sm": "8px",
+                    "base": "4px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": [
+                            "Inter"
+                    ],
+                    "headline-lg": [
+                            "Inter"
+                    ],
+                    "body-lg": [
+                            "Inter"
+                    ],
+                    "body-md": [
+                            "Inter"
+                    ],
+                    "headline-lg-mobile": [
+                            "Inter"
+                    ],
+                    "caption": [
+                            "Inter"
+                    ],
+                    "label-md": [
+                            "Inter"
+                    ],
+                    "display-lg": [
+                            "Inter"
+                    ]
+            },
+            "fontSize": {
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "28px",
+                            {
+                                    "lineHeight": "36px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "caption": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-md": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "0.01em",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "display-lg": [
+                            "48px",
+                            {
+                                    "lineHeight": "56px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-surface-dim border-b border-outline-variant dark:border-outline">
+<div class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop flex justify-between items-center w-full h-16">
+<div class="font-headline-md text-headline-md font-bold text-on-surface dark:text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-weight="fill" style="font-variation-settings: 'FILL' 1;">music_note</span>
+                NotaBridge
+            </div>
+<!-- Desktop Nav -->
+<nav class="hidden md:flex items-center gap-lg">
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer active:opacity-80 transition-all font-label-md text-label-md" href="#">Converter</a>
+<a class="text-secondary dark:text-secondary-fixed-dim hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer active:opacity-80 transition-all font-label-md text-label-md" href="#">Compare</a>
+<a class="text-primary dark:text-primary-fixed-dim border-b-2 border-primary dark:border-primary-fixed-dim pb-1 hover:text-primary dark:hover:text-primary-fixed-dim transition-colors cursor-pointer active:opacity-80 transition-all font-label-md text-label-md" href="#">Learn</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hidden md:block text-secondary hover:text-primary font-label-md text-label-md transition-colors">Sign In</button>
+<button class="md:hidden text-on-surface">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-xxl text-center">
+<div class="inline-flex items-center justify-center px-3 py-1 mb-6 rounded-full bg-secondary-container text-on-secondary-container font-caption text-caption">
+<span class="material-symbols-outlined text-sm mr-1">school</span>
+                Educational Series
+            </div>
+<h1 class="font-display-lg text-display-lg md:text-[64px] md:leading-[72px] text-on-background mb-6">What is Jianpu?</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                Understanding numbered notation and its relationship with traditional music reading. A comprehensive guide for students and educators.
+            </p>
+</section>
+<!-- Section: What is Jianpu? -->
+<section class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-xl">
+<div class="bg-surface border border-outline-variant rounded-xl p-lg md:p-xl shadow-[0_10px_15px_-3px_rgba(31,41,55,0.04)]">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background mb-4">The Universal Language of Numbers</h2>
+<div class="prose prose-lg max-w-none font-body-md text-body-md text-on-surface-variant space-y-4">
+<p>
+                        Jianpu (简谱), which translates directly to "simplified notation," is the widely recognized Chinese term for numbered musical notation. Unlike the western five-line staff, Jianpu utilizes the numbers 1 through 7 to represent the notes of the major scale (Do, Re, Mi, Fa, Sol, La, Ti).
+                    </p>
+<p>
+                        Developed to be accessible and intuitive, it is the primary method of musical instruction in many Eastern educational systems. Its simplicity allows beginners to quickly grasp melodic structures without the immediate cognitive load of deciphering complex staff symbols, making it an invaluable tool for ear training and initial musical literacy.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Section: How it works -->
+<section class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-xl">
+<div class="text-center mb-10">
+<h2 class="font-headline-md text-headline-md text-on-background mb-2">The Basic Scale</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Mapping scale degrees to musical pitches in a major key.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-4 md:gap-lg mb-8">
+<!-- Scale Degrees -->
+<div class="w-16 h-20 bg-surface border border-outline-variant rounded-lg flex flex-col items-center justify-center shadow-sm">
+<span class="font-headline-lg text-headline-lg text-on-background">1</span>
+<span class="font-caption text-caption text-secondary mt-1">Do</span>
+</div>
+<div class="w-16 h-20 bg-surface border border-outline-variant rounded-lg flex flex-col items-center justify-center shadow-sm">
+<span class="font-headline-lg text-headline-lg text-on-background">2</span>
+<span class="font-caption text-caption text-secondary mt-1">Re</span>
+</div>
+<div class="w-16 h-20 bg-surface border border-outline-variant rounded-lg flex flex-col items-center justify-center shadow-sm">
+<span class="font-headline-lg text-headline-lg text-on-background">3</span>
+<span class="font-caption text-caption text-secondary mt-1">Mi</span>
+</div>
+<div class="w-16 h-20 bg-surface border border-outline-variant rounded-lg flex flex-col items-center justify-center shadow-sm">
+<span class="font-headline-lg text-headline-lg text-on-background">4</span>
+<span class="font-caption text-caption text-secondary mt-1">Fa</span>
+</div>
+<div class="w-16 h-20 bg-surface border border-outline-variant rounded-lg flex flex-col items-center justify-center shadow-sm">
+<span class="font-headline-lg text-headline-lg text-on-background">5</span>
+<span class="font-caption text-caption text-secondary mt-1">Sol</span>
+</div>
+<div class="w-16 h-20 bg-surface border border-outline-variant rounded-lg flex flex-col items-center justify-center shadow-sm">
+<span class="font-headline-lg text-headline-lg text-on-background">6</span>
+<span class="font-caption text-caption text-secondary mt-1">La</span>
+</div>
+<div class="w-16 h-20 bg-surface border border-outline-variant rounded-lg flex flex-col items-center justify-center shadow-sm">
+<span class="font-headline-lg text-headline-lg text-on-background">7</span>
+<span class="font-caption text-caption text-secondary mt-1">Ti</span>
+</div>
+</div>
+<div class="text-center font-caption text-caption text-secondary max-w-md mx-auto">
+<span class="material-symbols-outlined text-sm align-middle mr-1">info</span>
+                In Jianpu, a dot above a number raises it by an octave, while a dot below lowers it by an octave. Lines underneath indicate rhythmic values (eighth notes, sixteenth notes, etc.).
+            </div>
+</section>
+<!-- Section: Comparison -->
+<section class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-xl">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background mb-8 text-center">Jianpu vs. Staff Notation</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<!-- Jianpu Card -->
+<div class="bg-surface border border-outline-variant rounded-xl p-lg shadow-[0_10px_15px_-3px_rgba(31,41,55,0.04)] flex flex-col h-full">
+<h3 class="font-headline-md text-headline-md text-on-background border-b border-outline-variant pb-4 mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">format_list_numbered</span>
+                        Jianpu
+                    </h3>
+<div class="flex-grow flex items-center justify-center p-8 bg-background rounded-lg border border-outline-variant">
+<!-- Abstract representation of numbered notation -->
+<div class="text-center space-y-4 font-headline-lg text-headline-lg text-on-background tracking-[0.5em]">
+<div>1   2   3   4</div>
+<div>5   <span class="relative">6<span class="absolute -bottom-2 left-1/2 -translate-x-1/2 text-xs">•</span></span>   7   <span class="relative">1<span class="absolute -top-3 left-1/2 -translate-x-1/2 text-xs">•</span></span></div>
+</div>
+</div>
+<ul class="mt-6 space-y-2 font-body-md text-body-md text-on-surface-variant">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
+                            Highly intuitive for beginners and vocalists.
+                        </li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
+                            Key-agnostic; focuses on relative pitch (moveable Do).
+                        </li>
+</ul>
+</div>
+<!-- Staff Card -->
+<div class="bg-surface border border-outline-variant rounded-xl p-lg shadow-[0_10px_15px_-3px_rgba(31,41,55,0.04)] flex flex-col h-full">
+<h3 class="font-headline-md text-headline-md text-on-background border-b border-outline-variant pb-4 mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">queue_music</span>
+                        Staff Notation
+                    </h3>
+<div class="flex-grow flex items-center justify-center p-4 bg-background rounded-lg border border-outline-variant overflow-hidden">
+<img class="w-full h-auto object-contain opacity-90 mix-blend-multiply" data-alt="A clean, minimalist illustration of standard 5-line musical staff notation. The ink is a deep charcoal grey (#1F2937) against a pristine white (#FFFFFF) background. It features a beautifully drawn treble clef followed by four distinct quarter notes (C, D, E, F) placed perfectly on the lines and spaces. The style is educational, precise, and highly legible, resembling a modern digital music textbook." src="https://lh3.googleusercontent.com/aida/AP1WRLvUMq9sfUUGHnnL_ETQ9u7_kyb_LSvUQQC-hwB1sJLbeTjppzFIbdHb0KCmtuecaLghF73YRJUPbx9FZqaLlsndf40F0S403DZiOisWLOI5313h5nkDlet1pCgXDDhv4pknNuUkcMp2LVt9Srdv3JBHwV0ol6Jj9dWmHe_MeuEVzojKiUqmQad-hBQFydrJtl_JhQiEpr2aPxKCk6eTTOj6RN64DhrRvAsA6JcoGFc3IXa7I0PNz7Ak2b8"/>
+</div>
+<ul class="mt-6 space-y-2 font-body-md text-body-md text-on-surface-variant">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-secondary text-lg mt-0.5">info</span>
+                            Provides an absolute pitch reference.
+                        </li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined text-secondary text-lg mt-0.5">info</span>
+                            Standard for complex harmonic and polyphonic music.
+                        </li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Section: FAQ -->
+<section class="max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-xl mb-xxl">
+<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background mb-8 text-center">Frequently Asked Questions</h2>
+<div class="max-w-3xl mx-auto space-y-4">
+<!-- FAQ Item 1 -->
+<div class="bg-surface border border-outline-variant rounded-lg overflow-hidden group">
+<button class="w-full px-6 py-4 flex justify-between items-center text-left focus:outline-none" onclick="this.parentElement.classList.toggle('is-open')">
+<span class="font-label-md text-label-md text-on-background font-semibold">What is Jianpu notation?</span>
+<span class="material-symbols-outlined text-secondary transition-transform duration-200 group-[.is-open]:rotate-180">expand_more</span>
+</button>
+<div class="px-6 pb-4 hidden group-[.is-open]:block font-body-md text-body-md text-on-surface-variant">
+                        Jianpu is a musical notation system that uses numbers (1-7) instead of notes on a staff. It is widely used in Asia and is particularly effective for teaching relative pitch and basic music theory to beginners.
+                    </div>
+</div>
+<!-- FAQ Item 2 -->
+<div class="bg-surface border border-outline-variant rounded-lg overflow-hidden group">
+<button class="w-full px-6 py-4 flex justify-between items-center text-left focus:outline-none" onclick="this.parentElement.classList.toggle('is-open')">
+<span class="font-label-md text-label-md text-on-background font-semibold">Is Jianpu the same as numbered notation?</span>
+<span class="material-symbols-outlined text-secondary transition-transform duration-200 group-[.is-open]:rotate-180">expand_more</span>
+</button>
+<div class="px-6 pb-4 hidden group-[.is-open]:block font-body-md text-body-md text-on-surface-variant">
+                        Yes, "Jianpu" is simply the Chinese term for numbered musical notation. While the core concept of using numbers for scale degrees exists in other cultures (like the Galin-Paris-Chevé method), Jianpu specifically refers to the formalized system prevalent in Chinese music education.
+                    </div>
+</div>
+<!-- FAQ Item 3 -->
+<div class="bg-surface border border-outline-variant rounded-lg overflow-hidden group is-open">
+<button class="w-full px-6 py-4 flex justify-between items-center text-left focus:outline-none" onclick="this.parentElement.classList.toggle('is-open')">
+<span class="font-label-md text-label-md text-on-background font-semibold">Can Jianpu be converted to sheet music?</span>
+<span class="material-symbols-outlined text-secondary transition-transform duration-200 group-[.is-open]:rotate-180">expand_more</span>
+</button>
+<div class="px-6 pb-4 hidden group-[.is-open]:block font-body-md text-body-md text-on-surface-variant">
+                        Absolutely. Because both systems describe musical pitches and rhythms, they can be translated back and forth. Tools like <strong class="text-primary font-medium">NotaBridge</strong> specialize in accurately converting Jianpu numbered notation into standard 5-line staff sheet music, bridging the gap between different musical traditions.
+                    </div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low dark:bg-inverse-surface border-t border-outline-variant dark:border-outline">
+<div class="max-w-max-width mx-auto px-margin-desktop py-xl flex flex-col md:flex-row justify-between items-center gap-lg w-full">
+<div class="flex flex-col items-center md:items-start gap-2">
+<div class="font-headline-md text-headline-md font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">music_note</span>
+                    NotaBridge
+                </div>
+<p class="font-caption text-caption text-secondary">© 2024 NotaBridge. Empowering musical literacy through technology.</p>
+</div>
+<nav class="flex flex-wrap justify-center gap-6">
+<a class="font-label-md text-label-md text-on-secondary-container dark:text-on-secondary-fixed-variant hover:underline decoration-primary dark:decoration-primary-fixed-dim transition-all duration-200" href="#">Documentation</a>
+<a class="font-label-md text-label-md text-on-secondary-container dark:text-on-secondary-fixed-variant hover:underline decoration-primary dark:decoration-primary-fixed-dim transition-all duration-200" href="#">Methodology</a>
+<a class="font-label-md text-label-md text-on-secondary-container dark:text-on-secondary-fixed-variant hover:underline decoration-primary dark:decoration-primary-fixed-dim transition-all duration-200" href="#">Privacy Policy</a>
+<a class="font-label-md text-label-md text-on-secondary-container dark:text-on-secondary-fixed-variant hover:underline decoration-primary dark:decoration-primary-fixed-dim transition-all duration-200" href="#">Contact Support</a>
+</nav>
+</div>
+</footer>
+<style>
+        /* Base open state for accordion if we want to ensure tailwind arbitrary variants work reliably */
+        .group.is-open .hidden {
+            display: block;
+        }
+    </style>
+</body></html>

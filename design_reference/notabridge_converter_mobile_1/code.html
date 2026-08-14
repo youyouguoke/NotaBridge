@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NotaBridge - Converter (Mobile)</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-low": "#eff4ff",
+                      "secondary-fixed": "#d5e3fc",
+                      "inverse-surface": "#27313f",
+                      "surface-container-highest": "#d9e3f6",
+                      "outline": "#727785",
+                      "error-container": "#ffdad6",
+                      "tertiary-container": "#00873a",
+                      "inverse-on-surface": "#eaf1ff",
+                      "tertiary-fixed-dim": "#62df7d",
+                      "primary-fixed-dim": "#adc6ff",
+                      "on-tertiary-fixed-variant": "#005320",
+                      "secondary": "#515f74",
+                      "outline-variant": "#c2c6d6",
+                      "primary-container": "#2170e4",
+                      "surface": "#f8f9ff",
+                      "on-primary-fixed": "#001a42",
+                      "tertiary": "#006b2c",
+                      "background": "#f8f9ff",
+                      "surface-bright": "#f8f9ff",
+                      "on-primary-container": "#fefcff",
+                      "on-primary": "#ffffff",
+                      "surface-container": "#e6eeff",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-high": "#dee9fc",
+                      "on-surface": "#121c2a",
+                      "on-error-container": "#93000a",
+                      "inverse-primary": "#adc6ff",
+                      "on-tertiary": "#ffffff",
+                      "surface-dim": "#d0dbed",
+                      "primary": "#0058be",
+                      "surface-tint": "#005ac2",
+                      "on-surface-variant": "#424754",
+                      "secondary-fixed-dim": "#b9c7df",
+                      "error": "#ba1a1a",
+                      "on-tertiary-fixed": "#002109",
+                      "surface-variant": "#d9e3f6",
+                      "on-primary-fixed-variant": "#004395",
+                      "on-secondary-fixed-variant": "#3a485b",
+                      "secondary-container": "#d5e3fc",
+                      "on-error": "#ffffff",
+                      "on-secondary-fixed": "#0d1c2e",
+                      "primary-fixed": "#d8e2ff",
+                      "on-background": "#121c2a",
+                      "on-tertiary-container": "#f7fff2",
+                      "tertiary-fixed": "#7ffc97",
+                      "on-secondary-container": "#57657a",
+                      "on-secondary": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "margin-mobile": "16px",
+                      "base": "4px",
+                      "sm": "8px",
+                      "max-width": "1280px",
+                      "xs": "4px",
+                      "lg": "24px",
+                      "xxl": "48px",
+                      "xl": "32px",
+                      "md": "16px",
+                      "margin-desktop": "64px"
+              },
+              "fontFamily": {
+                      "display-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "label-md": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "headline-lg-mobile": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-lg": ["Inter"],
+                      "caption": ["Inter"]
+              },
+              "fontSize": {
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "caption": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        body { background-color: #FAF7F2; color: #1F2937; } /* Warm paper aesthetic & clean ink typography */
+        .paper-card {
+            background-color: #FFFFFF;
+            border-radius: 16px;
+            border: 1px solid #E5E7EB;
+        }
+        .ink-text { color: #1F2937; }
+        .input-blank {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            border: 1px solid #D1D5DB;
+            transition: all 0.2s;
+        }
+        .input-blank:focus-within {
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+        .btn-primary {
+            background-color: #3B82F6;
+            color: #FFFFFF;
+            border-radius: 8px;
+        }
+        .chip {
+            background-color: #F3F4F6;
+            border-radius: 4px;
+            padding: 4px;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col font-body-md text-body-md relative">
+<!-- Mobile Header (Simplified TopNavBar for mobile context) -->
+<header class="bg-surface sticky top-0 z-50 shadow-sm md:hidden">
+<div class="flex justify-between items-center h-16 px-margin-mobile">
+<div class="font-headline-md text-headline-md text-primary">NotaBridge</div>
+<div class="flex items-center gap-md">
+<span class="font-label-md text-label-md text-secondary">EN/中文</span>
+<button class="text-on-surface-variant p-2">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</div>
+</header>
+<!-- TopNavBar (Web) -->
+<header class="bg-surface hidden md:block sticky top-0 z-50">
+<div class="flex justify-between items-center h-16 max-w-max-width mx-auto px-margin-desktop">
+<div class="text-headline-md font-headline-md text-primary">NotaBridge</div>
+<nav class="flex gap-lg">
+<a class="text-primary font-bold border-b-2 border-primary pb-1" href="#">Converter</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Compare</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Learn</a>
+</nav>
+<div class="font-label-md text-label-md text-secondary">EN/中文</div>
+</div>
+</header>
+<main class="flex-1 w-full max-w-max-width mx-auto px-margin-mobile md:px-margin-desktop py-lg flex flex-col gap-xl">
+<!-- Input Editor Card -->
+<section class="paper-card p-lg md:p-xl flex flex-col gap-md">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile ink-text md:font-headline-lg md:text-headline-lg">Enter Numbered Notation</h2>
+<!-- Controls (Scrollable on mobile) -->
+<div class="flex overflow-x-auto gap-md pb-2 hide-scrollbar -mx-lg px-lg md:mx-0 md:px-0">
+<div class="input-blank flex-shrink-0 flex items-center px-sm py-xs">
+<label class="font-caption text-caption text-secondary mr-2">Key</label>
+<select class="bg-transparent border-none focus:ring-0 text-sm font-medium ink-text py-1 pl-1 pr-6">
+<option>C Major</option>
+<option>G Major</option>
+<option>F Major</option>
+</select>
+</div>
+<div class="input-blank flex-shrink-0 flex items-center px-sm py-xs">
+<label class="font-caption text-caption text-secondary mr-2">Time</label>
+<select class="bg-transparent border-none focus:ring-0 text-sm font-medium ink-text py-1 pl-1 pr-6">
+<option>4/4</option>
+<option>3/4</option>
+<option>2/4</option>
+</select>
+</div>
+<div class="input-blank flex-shrink-0 flex items-center px-sm py-xs">
+<label class="font-caption text-caption text-secondary mr-2">Tempo</label>
+<input class="bg-transparent border-none focus:ring-0 text-sm font-medium ink-text w-16 p-1" type="number" value="120"/>
+</div>
+</div>
+<!-- Text Editor -->
+<div class="input-blank flex-1 min-h-[200px] flex flex-col">
+<textarea class="w-full h-full bg-transparent border-none focus:ring-0 resize-none p-md font-mono text-lg ink-text" placeholder="e.g. 1 2 3 4 | 5 - - - ||" spellcheck="false">1 1 5 5 | 6 6 5 - |
+4 4 3 3 | 2 2 1 - ||</textarea>
+</div>
+<button class="btn-primary w-full py-md font-label-md text-label-md flex justify-center items-center gap-2 mt-sm">
+<span class="material-symbols-outlined text-sm">autorenew</span>
+                Convert to Staff
+            </button>
+</section>
+<!-- Preview Card -->
+<section class="paper-card p-lg md:p-xl flex flex-col gap-md">
+<div class="flex justify-between items-center">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile ink-text md:font-headline-lg md:text-headline-lg">Staff Preview</h2>
+<div class="flex gap-sm">
+<button class="p-2 text-secondary hover:text-primary transition-colors bg-surface rounded-full"><span class="material-symbols-outlined" data-icon="play_arrow">play_arrow</span></button>
+<button class="p-2 text-secondary hover:text-primary transition-colors bg-surface rounded-full"><span class="material-symbols-outlined" data-icon="download">download</span></button>
+</div>
+</div>
+<div class="w-full bg-[#FAF7F2] rounded-lg p-md overflow-x-auto border border-gray-200">
+<!-- Placeholder for Staff Image (acting as Music Notation Block) -->
+<div class="min-w-[400px] h-32 relative">
+<img class="w-full h-full object-contain opacity-80 mix-blend-multiply" data-alt="A clean, minimalist rendering of standard musical staff notation on warm textured paper background. The black ink notes depict the melody of Twinkle Twinkle Little Star in 4/4 time signature. High legibility, educational style, academic tone." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOgnPQ2WdOYk6n32W31orreCKbwXzosY1FT22FCvgdb6uFBOL8BNuwuiyHTZew5tegaJVBG4Y_13G6lFMRlF3-UDkp-qKqHe4I9glmax8lBRMLqUu7Uksant9FvXllPJztoiJOO2RtC6iGgNFY80EIdKfoJ5Nv6A-lnAwMXj_1FzAiQlVaSG5B8fAPTUWXFWWiMtYg422P0LT5bzwGc0Sm2dgwK4-cz41WztgxhCPhRWf06vz4_02t"/>
+</div>
+</div>
+</section>
+<!-- Compare Section (Visual Bridge) -->
+<section class="paper-card p-lg md:p-xl flex flex-col gap-md border-l-4 border-l-[#3B82F6]">
+<h3 class="font-headline-md text-headline-md ink-text">Analysis</h3>
+<p class="font-body-md text-body-md text-secondary">Mapping numbered notation to standard staff.</p>
+<div class="flex flex-col gap-sm">
+<div class="flex items-center gap-4 bg-surface p-sm rounded-lg">
+<div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold font-mono">1</div>
+<span class="material-symbols-outlined text-outline">arrow_right_alt</span>
+<div class="font-label-md text-label-md ink-text">C4 (Middle C)</div>
+</div>
+<div class="flex items-center gap-4 bg-surface p-sm rounded-lg">
+<div class="w-8 h-8 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold font-mono">5</div>
+<span class="material-symbols-outlined text-outline">arrow_right_alt</span>
+<div class="font-label-md text-label-md ink-text">G4 (Perfect Fifth)</div>
+</div>
+<div class="flex items-center gap-4 bg-surface p-sm rounded-lg">
+<div class="font-mono text-sm chip ink-text">-</div>
+<span class="material-symbols-outlined text-outline">arrow_right_alt</span>
+<div class="font-label-md text-label-md ink-text">Half Note Duration</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest w-full mt-xxl py-xl border-t border-surface-container-low">
+<div class="flex flex-col items-center gap-md max-w-max-width mx-auto px-margin-desktop">
+<div class="font-headline-md text-headline-md text-primary">NotaBridge</div>
+<div class="flex flex-wrap justify-center gap-md md:gap-lg font-caption text-caption text-on-secondary-container">
+<a class="hover:text-primary transition-colors" href="#">Theory Basics</a>
+<a class="hover:text-primary transition-colors" href="#">Notation Guide</a>
+<a class="hover:text-primary transition-colors" href="#">Teacher Resources</a>
+<a class="hover:text-primary transition-colors" href="#">Help Center</a>
+</div>
+<div class="font-caption text-caption text-secondary mt-sm">© 2024 NotaBridge. Empowering musical literacy through tactile education.</div>
+</div>
+</footer>
+<style>
+        /* Utilities for hiding scrollbar but keeping functionality */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</body></html>

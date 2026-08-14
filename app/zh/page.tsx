@@ -2,7 +2,7 @@ import Link from "next/link";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 
-export default function HomePage() {
+export default function HomePageZh() {
   return (
     <>
       <Header />
@@ -11,26 +11,26 @@ export default function HomePage() {
         <section className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-8">
           <div className="flex flex-col gap-6">
             <h1 className="text-4xl md:text-5xl font-bold text-on-surface tracking-tight">
-              The easiest bridge between numbered notation and staff notation.
+              连接简谱与五线谱的在线记谱工具
             </h1>
             <p className="text-lg text-on-surface-variant">
-              Convert numbered notation into sheet music and learn how both systems represent the same melody.
+              将简谱转换为五线谱，同时学习两种记谱方式的对应关系。
             </p>
             <div className="flex flex-wrap items-center gap-4">
               <Link
-                href="/convert"
+                href="/zh/convert"
                 className="bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-medium text-sm py-2 px-6 rounded-lg transition-colors inline-flex items-center gap-2"
               >
-                Start Creating
+                开始转换
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>
               <Link
-                href="/learn"
+                href="/zh/learn"
                 className="text-[#475569] font-medium text-sm hover:text-[#2563EB] transition-colors py-2 px-4 rounded-lg inline-flex items-center gap-1"
               >
-                Learn How It Works
+                了解更多
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
@@ -39,8 +39,8 @@ export default function HomePage() {
           </div>
           <div className="flex justify-center items-center p-4 bg-white rounded-2xl border border-[#E5E7EB] shadow-[0_10px_15px_-3px_rgba(31,41,55,0.04)]">
             <img
-              src="/images/hero-en.png"
-              alt="Elegant music notation illustration showing bridge between numbers and notes"
+              src="/images/hero-zh.png"
+              alt="简谱与五线谱对照的音乐教材风格插图"
               className="w-full h-auto object-contain max-h-[400px] rounded-lg"
             />
           </div>
@@ -48,12 +48,12 @@ export default function HomePage() {
 
         {/* How it works */}
         <section className="flex flex-col gap-6">
-          <h2 className="text-3xl font-semibold text-on-surface text-center">How it works</h2>
+          <h2 className="text-3xl font-semibold text-on-surface text-center">功能介绍</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { icon: "keyboard", title: "Enter Numbered Notation", body: "Type your numbered notation quickly using your keyboard." },
-              { icon: "music", title: "Generate Sheet Music", body: "Watch it instantly transform into standard western staff notation." },
-              { icon: "book", title: "Compare & Learn", body: "See both systems side-by-side to improve your reading skills." },
+              { icon: "keyboard", title: "输入简谱", body: "使用键盘快速输入数字简谱。" },
+              { icon: "music", title: "生成五线谱", body: "即时转换为标准五线谱格式。" },
+              { icon: "book", title: "对照学习", body: "同时查看两种记谱法，提升识谱能力。" },
             ].map((card) => (
               <div
                 key={card.title}
@@ -89,12 +89,12 @@ export default function HomePage() {
         {/* Features */}
         <section className="grid grid-cols-1 md:grid-cols-12 gap-6 py-8">
           <div className="md:col-span-5 bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-[0_10px_15px_-3px_rgba(31,41,55,0.04)] flex flex-col justify-center">
-            <h3 className="text-2xl font-semibold text-on-surface mb-3">Convert Notation</h3>
+            <h3 className="text-2xl font-semibold text-on-surface mb-3">简谱转五线谱</h3>
             <p className="text-base text-on-surface-variant mb-6">
-              Transform numbered notation into staff notation instantly. Our engine handles key signatures, octaves, and rhythms.
+              快速准确地将数字简谱翻译成标准五线谱，支持多种调式、八度与节奏。
             </p>
             <div className="mt-auto pt-4 border-t border-[#E5E7EB] flex items-center justify-between">
-              <span className="text-sm font-medium text-secondary">Accuracy Guaranteed</span>
+              <span className="text-sm font-medium text-secondary">精准转换</span>
               <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
@@ -109,8 +109,8 @@ export default function HomePage() {
                 </svg>
               </div>
               <div>
-                <h4 className="text-xl font-semibold text-on-surface">Side-by-Side Comparison</h4>
-                <p className="text-base text-on-surface-variant">See the same melody in two notation systems simultaneously.</p>
+                <h4 className="text-xl font-semibold text-on-surface">双栏对照视图</h4>
+                <p className="text-base text-on-surface-variant">双视窗对照，直观展示两种记谱法的对应关系。</p>
               </div>
             </div>
             <div className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-[0_10px_15px_-3px_rgba(31,41,55,0.04)] flex items-center gap-4">
@@ -120,8 +120,8 @@ export default function HomePage() {
                 </svg>
               </div>
               <div>
-                <h4 className="text-xl font-semibold text-on-surface">Create Printable Scores</h4>
-                <p className="text-base text-on-surface-variant">Export clean music sheets for practice and teaching.</p>
+                <h4 className="text-xl font-semibold text-on-surface">在线生成乐谱</h4>
+                <p className="text-base text-on-surface-variant">导出高清乐谱，方便练习与教学。</p>
               </div>
             </div>
           </div>
@@ -129,25 +129,25 @@ export default function HomePage() {
 
         {/* Learn Music Notation */}
         <section className="flex flex-col gap-6">
-          <h2 className="text-3xl font-semibold text-on-surface border-b border-[#E5E7EB] pb-3">Learn Music Notation</h2>
+          <h2 className="text-3xl font-semibold text-on-surface border-b border-[#E5E7EB] pb-3">学习中心</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               {
-                title: "What is Numbered Notation?",
-                body: "A quick introduction to the Jianpu system and its origins.",
+                title: "什么是简谱？",
+                body: "快速了解简谱系统及其起源。",
               },
               {
-                title: "Numbered Notation vs Staff Notation",
-                body: "Understanding the key differences and advantages of each system.",
+                title: "简谱与五线谱的区别",
+                body: "理解两种记谱法的关键差异与各自优势。",
               },
               {
-                title: "How to Read Music Numbers",
-                body: "Learn the basics of translating numbers 1-7 into pitches and rhythms.",
+                title: "如何识读数字谱",
+                body: "学习将 1-7 数字转化为音高与节奏的基础。",
               },
             ].map((card) => (
               <Link
                 key={card.title}
-                href="/learn"
+                href="/zh/learn"
                 className="bg-white rounded-2xl p-6 border border-[#E5E7EB] shadow-[0_10px_15px_-3px_rgba(31,41,55,0.04)] hover:border-[#2563EB] transition-colors group"
               >
                 <h4 className="text-xl font-semibold text-on-surface group-hover:text-[#2563EB] transition-colors mb-2">

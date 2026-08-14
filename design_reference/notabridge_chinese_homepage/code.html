@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html class="light" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>谱桥 - 在线记谱工具</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#424754",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#f8f9ff",
+                        "on-background": "#121c2a",
+                        "surface-container-highest": "#d9e3f6",
+                        "primary-fixed-dim": "#adc6ff",
+                        "tertiary": "#006b2c",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#eff4ff",
+                        "surface-tint": "#005ac2",
+                        "secondary-container": "#d5e3fc",
+                        "on-surface": "#121c2a",
+                        "on-secondary-fixed-variant": "#3a485b",
+                        "secondary": "#515f74",
+                        "surface-container-high": "#dee9fc",
+                        "tertiary-fixed": "#7ffc97",
+                        "on-tertiary-container": "#f7fff2",
+                        "secondary-fixed": "#d5e3fc",
+                        "outline-variant": "#c2c6d6",
+                        "surface-dim": "#d0dbed",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#d9e3f6",
+                        "inverse-primary": "#adc6ff",
+                        "inverse-surface": "#27313f",
+                        "outline": "#727785",
+                        "inverse-on-surface": "#eaf1ff",
+                        "primary": "#0058be",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#005320",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#002109",
+                        "secondary-fixed-dim": "#b9c7df",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#001a42",
+                        "surface-container": "#e6eeff",
+                        "primary-container": "#2170e4",
+                        "on-secondary-fixed": "#0d1c2e",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-bright": "#f8f9ff",
+                        "on-secondary-container": "#57657a",
+                        "tertiary-fixed-dim": "#62df7d",
+                        "on-primary-fixed-variant": "#004395",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#fefcff",
+                        "background": "#f8f9ff",
+                        "tertiary-container": "#00873a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "max-width": "1280px",
+                        "base": "4px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "16px",
+                        "sm": "8px",
+                        "xl": "32px",
+                        "lg": "24px",
+                        "xxl": "48px"
+                    },
+                    "fontFamily": {
+                        "caption": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-lg-mobile": ["Inter"]
+                    },
+                    "fontSize": {
+                        "caption": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md antialiased min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-surface sticky top-0 z-50 transition-colors w-full border-b-0 shadow-sm shadow-surface-dim/20">
+<div class="flex justify-between items-center h-16 w-full px-margin-mobile md:px-margin-desktop max-w-max-width mx-auto">
+<div class="flex items-center gap-6">
+<a class="font-headline-md text-headline-md font-bold text-primary" href="#">谱桥</a>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-primary border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">转换器</a>
+<a class="text-on-secondary-container hover:text-primary transition-colors font-label-md text-label-md" href="#">学习</a>
+<a class="text-on-secondary-container hover:text-primary transition-colors font-label-md text-label-md" href="#">学院</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<a class="text-on-secondary-container hover:text-primary transition-all font-label-md text-label-md hidden md:block" href="#">登录</a>
+<a class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors" href="#">开始学习</a>
+</div>
+</div>
+</header>
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="py-xxl px-margin-mobile md:px-margin-desktop max-w-max-width mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="flex flex-col gap-6">
+<div class="inline-flex items-center gap-2 bg-surface-container-high px-3 py-1 rounded-full w-fit">
+<span class="material-symbols-outlined text-primary text-[16px]">music_note</span>
+<span class="font-label-md text-label-md text-on-surface-variant">在线记谱工具</span>
+</div>
+<h1 class="font-display-lg text-display-lg text-on-surface">连接简谱与五线谱的在线记谱工具</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">将简谱转换为五线谱，同时学习两种记谱方式。体验清晰、极简的数字化乐谱工作环境。</p>
+<div class="flex flex-wrap gap-4 mt-4">
+<a class="bg-primary text-on-primary px-6 py-3 rounded-lg font-label-md text-label-md hover:bg-primary-container transition-colors shadow-sm" href="#">开始转换</a>
+<a class="bg-transparent text-secondary border border-outline px-6 py-3 rounded-lg font-label-md text-label-md hover:bg-surface-container transition-colors" href="#">了解更多</a>
+</div>
+</div>
+<div class="relative rounded-2xl overflow-hidden border border-outline-variant bg-surface-container-lowest p-4 shadow-sm shadow-surface-dim/10">
+<img alt="Illustration showing the relationship between numbered and staff notation on warm paper" class="w-full h-auto object-cover rounded-xl" src="https://lh3.googleusercontent.com/aida/AP1WRLvUMq9sfUUGHnnL_ETQ9u7_kyb_LSvUQQC-hwB1sJLbeTjppzFIbdHb0KCmtuecaLghF73YRJUPbx9FZqaLlsndf40F0S403DZiOisWLOI5313h5nkDlet1pCgXDDhv4pknNuUkcMp2LVt9Srdv3JBHwV0ol6Jj9dWmHe_MeuEVzojKiUqmQad-hBQFydrJtl_JhQiEpr2aPxKCk6eTTOj6RN64DhrRvAsA6JcoGFc3IXa7I0PNz7Ak2b8"/>
+</div>
+</div>
+</section>
+<!-- Features Section -->
+<section class="py-xxl px-margin-mobile md:px-margin-desktop bg-surface-container-lowest border-y border-outline-variant/30">
+<div class="max-w-max-width mx-auto">
+<div class="text-center mb-12">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-4">功能介绍</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">专业的在线工具，帮助您轻松处理乐谱转换与学习。</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="bg-surface p-6 rounded-2xl border border-outline-variant hover:border-primary/50 transition-colors group">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary text-2xl">sync_alt</span>
+</div>
+<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-3">简谱转五线谱</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">快速、准确地将数字简谱翻译成标准的五线谱格式，支持多种调式。</p>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface p-6 rounded-2xl border border-outline-variant hover:border-primary/50 transition-colors group">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary text-2xl">compare</span>
+</div>
+<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-3">简谱五线谱对照学习</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">双视窗对照模式，直观展示两种记谱法的对应关系，加速学习进程。</p>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface p-6 rounded-2xl border border-outline-variant hover:border-primary/50 transition-colors group">
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary text-2xl">edit_document</span>
+</div>
+<h3 class="font-headline-md text-[20px] font-semibold text-on-surface mb-3">在线生成乐谱</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">直接在浏览器中编写和排版您的乐谱，导出高清PDF供打印使用。</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Learning Center Section -->
+<section class="py-xxl px-margin-mobile md:px-margin-desktop max-w-max-width mx-auto">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-2">学习中心</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">掌握乐理知识，提高识谱能力</p>
+</div>
+<a class="text-primary hover:text-primary-container font-label-md text-label-md flex items-center gap-1 transition-colors" href="#">
+                    查看全部 <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Learning Card 1 -->
+<a class="block bg-surface-container-lowest rounded-2xl border border-outline-variant overflow-hidden hover:shadow-[0_10px_15px_-3px_rgba(31,41,55,0.04)] transition-all" href="#">
+<div class="h-40 bg-surface-container-high flex items-center justify-center relative overflow-hidden">
+<span class="material-symbols-outlined text-primary/40 text-6xl">school</span>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-surface-container-highest text-on-surface-variant text-[12px] px-2 py-1 rounded">基础</span>
+</div>
+<h3 class="font-headline-md text-[18px] font-semibold text-on-surface mb-2">简谱入门</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">了解简谱的基本构成、数字含义及节奏表示方法。</p>
+</div>
+</a>
+<!-- Learning Card 2 -->
+<a class="block bg-surface-container-lowest rounded-2xl border border-outline-variant overflow-hidden hover:shadow-[0_10px_15px_-3px_rgba(31,41,55,0.04)] transition-all" href="#">
+<div class="h-40 bg-surface-container-high flex items-center justify-center relative overflow-hidden">
+<span class="material-symbols-outlined text-primary/40 text-6xl">library_music</span>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-surface-container-highest text-on-surface-variant text-[12px] px-2 py-1 rounded">进阶</span>
+</div>
+<h3 class="font-headline-md text-[18px] font-semibold text-on-surface mb-2">简谱五线谱区别</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">深度解析两种记谱法的优缺点及其在不同音乐场景中的应用。</p>
+</div>
+</a>
+<!-- Learning Card 3 -->
+<a class="block bg-surface-container-lowest rounded-2xl border border-outline-variant overflow-hidden hover:shadow-[0_10px_15px_-3px_rgba(31,41,55,0.04)] transition-all" href="#">
+<div class="h-40 bg-surface-container-high flex items-center justify-center relative overflow-hidden">
+<span class="material-symbols-outlined text-primary/40 text-6xl">menu_book</span>
+</div>
+<div class="p-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="bg-surface-container-highest text-on-surface-variant text-[12px] px-2 py-1 rounded">实践</span>
+</div>
+<h3 class="font-headline-md text-[18px] font-semibold text-on-surface mb-2">识谱教学</h3>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-2">通过循序渐进的练习，提高快速准确读取五线谱的能力。</p>
+</div>
+</a>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest w-full py-12 border-t border-outline-variant mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center w-full px-margin-mobile md:px-margin-desktop max-w-max-width mx-auto">
+<div class="font-headline-md text-headline-md text-on-surface mb-4 md:mb-0">
+                © 2024 谱桥 音乐教育
+            </div>
+<div class="flex items-center gap-6">
+<a class="text-on-surface-variant hover:text-primary underline transition-all font-caption text-caption" href="#">条款</a>
+<a class="text-on-surface-variant hover:text-primary underline transition-all font-caption text-caption" href="#">隐私</a>
+<a class="text-on-surface-variant hover:text-primary underline transition-all font-caption text-caption" href="#">课程指南</a>
+</div>
+</div>
+</footer>
+</body></html>
