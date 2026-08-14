@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState, useEffect } from "react";
+import { useMemo, useRef, useState, useEffect, useCallback } from "react";
 import { Song } from "@/lib/songs";
 import { parseJianpu } from "@/lib/music-engine/parser/parser";
 import JianpuRenderer from "@/components/music/JianpuRenderer";
@@ -15,8 +15,7 @@ export default function SongComparison({ song, locale = "en" }: SongComparisonPr
   const isZh = locale === "zh";
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(720);
-  const jianpuRef = useRef<React.ElementRef<typeof JianpuRenderer>>(null);
-  const staffRef = useRef<React.ElementRef<typeof StaffRenderer>>(null);
+  const [hoveredNoteId, setHoveredNoteId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!wrapperRef.current) return;
@@ -44,21 +43,29 @@ export default function SongComparison({ song, locale = "en" }: SongComparisonPr
     });
   }, [song]);
 
+  const handleHover = useCallback((id: string | null) => {
+    setHoveredNoteId(id);
+  }, []);
+
   return (
     <div ref={wrapperRef} className="flex flex-col gap-8">
       <section className="bg-white rounded-2xl border border-[#E5E7EB] p-6 shadow-sm">
         <h2 className="text-xl font-semibold text-on-surface mb-4">
           {isZh ? "简谱" : "Numbered Notation"}
         </h2>
-        <JianpuRenderer ref={jianpuRef} score={score} width={width} />
+        <JianpuRenderer score={score} width={width} hoveredNoteId={hoveredNoteId} onHover={handleHover} />
       </section>
 
       <section className="bg-white rounded-2xl border border-[#E5E7EB] p-6 shadow-sm">
         <h2 className="text-xl font-semibold text-on-surface mb-4">
           {isZh ? "五线谱" : "Staff Notation"}
         </h2>
-        <StaffRenderer ref={staffRef} score={score} width={width} />
+        <StaffRenderer score={score} width={width} hoveredNoteId={hoveredNoteId} onHover={handleHover} />
       </section>
+
+      <p className="text-xs text-on-surface-variant text-center">
+        {isZh ? "提示：鼠标悬停在音符上可查看简谱与五线谱的对应关系。" : "Tip: hover over a note to see its match in the other notation."}
+      </p>
 
       <section className="bg-white rounded-2xl border border-[#E5E7EB] p-6 shadow-sm">
         <h2 className="text-xl font-semibold text-on-surface mb-4">

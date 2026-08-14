@@ -12,25 +12,33 @@ import {
   FONT_SIZE,
   LYRIC_FONT_SIZE,
   NoteSlot,
-  STAFF_LINE_SPACE,
   STAFF_SCALE,
 } from "@/lib/music-engine/render/layout";
 import { isNote } from "@/lib/music-engine/ast/types";
+import { degreeToMidi } from "@/lib/music-engine/parser/parser";
 
 export interface JianpuRendererRef {
   exportPng: () => Promise<string | null>;
   getSvgElement: () => SVGSVGElement | null;
 }
 
-interface JianpuRendererProps {
+export interface JianpuRendererProps {
   score: ScoreAST;
   width?: number;
+  hoveredNoteId?: string | null;
+  onHover?: (id: string | null) => void;
 }
 
 const DOT_SIZE = 4 * STAFF_SCALE;
 
+function noteId(slot: NoteSlot): string | null {
+  const item = slot.item;
+  if (!isNote(item)) return null;
+  return `${item.degree}:${item.octave}:${item.accidental || ""}:${item.duration.type}:${item.duration.dotted ? 1 : 0}`;
+}
+
 const JianpuRenderer = forwardRef<JianpuRendererRef, JianpuRendererProps>(function JianpuRendererInner(
-  { score, width = 720 },
+  { score, width = 720, hoveredNoteId, onHover },
   ref
 ) {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -115,7 +123,17 @@ const JianpuRenderer = forwardRef<JianpuRendererRef, JianpuRendererProps>(functi
 
           {row.measures.map((measure, mIdx) => (
             <g key={mIdx} transform={`translate(${measure.offsetX}, 0)`}>
-              {measure.notes.map((slot, index) => renderNote(slot, centerY, lyricY, lowerDotY))}
+              {measure.notes.map((slot, index) => (
+                <NoteElement
+                  key={`note-${index}-${slot.x}`}
+                  slot={slot}
+                  centerY={centerY}
+                  lyricY={lyricY}
+                  lowerDotY={lowerDotY}
+                  isHovered={noteId(slot) !== null && noteId(slot) === hoveredNoteId}
+                  onHover={onHover}
+                />
+              ))}
               <Barline x={measure.width} rowHeight={ROW_HEIGHT} isFinal={mIdx === row.measures.length - 1} />
             </g>
           ))}
@@ -125,8 +143,20 @@ const JianpuRenderer = forwardRef<JianpuRendererRef, JianpuRendererProps>(functi
   );
 });
 
-function renderNote(slot: NoteSlot, centerY: number, lyricY: number, lowerDotY: number) {
+interface NoteElementProps {
+  slot: NoteSlot;
+  centerY: number;
+  lyricY: number;
+  lowerDotY: number;
+  isHovered?: boolean;
+  onHover?: (id: string | null) => void;
+}
+
+function NoteElement({ slot, centerY, lyricY, lowerDotY, isHovered, onHover }: NoteElementProps) {
   const { item, x } = slot;
+  const id = noteId(slot);
+  const handleEnter = () => id && onHover?.(id);
+  const handleLeave = () => onHover?.(null);
 
   if (!isNote(item)) {
     return (
@@ -145,7 +175,7 @@ function renderNote(slot: NoteSlot, centerY: number, lyricY: number, lowerDotY: 
   }
 
   const note = item;
-  const accidental = note.accidental === "#" ? "♯" : note.accidental === "b" ? "♭" : "";
+  const accidental = note.accidental === "#" ? "#" : note.accidental === "b" ? "b" : "";
   const upperDots = Math.max(0, note.octave);
   const lowerDots = Math.max(0, -note.octave);
 
@@ -153,9 +183,24 @@ function renderNote(slot: NoteSlot, centerY: number, lyricY: number, lowerDotY: 
   const hasSixteenth = note.duration.type === "sixteenth";
   const hasHalf = note.duration.type === "half";
   const hasWhole = note.duration.type === "whole";
+  const fillClass = isHovered ? "fill-primary" : "fill-on-surface";
 
   return (
-    <g key={`note-${x}`}>
+    <g
+      key={`note-${x}`}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+      className={onHover ? "cursor-pointer" : undefined}
+    >
+      {isHovered && (
+        <circle
+          cx={x}
+          cy={centerY + 6}
+          r={22}
+          className="fill-primary/10"
+          pointerEvents="none"
+        />
+      )}
       {/* Upper octave dots */}
       {Array.from({ length: upperDots }).map((_, i) => (
         <circle
@@ -163,7 +208,7 @@ function renderNote(slot: NoteSlot, centerY: number, lyricY: number, lowerDotY: 
           cx={x}
           cy={centerY - 22 * STAFF_SCALE - i * 8 * STAFF_SCALE}
           r={DOT_SIZE / 2}
-          className="fill-on-surface"
+          className={fillClass}
         />
       ))}
 
@@ -174,7 +219,7 @@ function renderNote(slot: NoteSlot, centerY: number, lyricY: number, lowerDotY: 
           cx={x}
           cy={lowerDotY + 8 * STAFF_SCALE + i * 8 * STAFF_SCALE}
           r={DOT_SIZE / 2}
-          className="fill-on-surface"
+          className={fillClass}
         />
       ))}
 
@@ -183,7 +228,7 @@ function renderNote(slot: NoteSlot, centerY: number, lyricY: number, lowerDotY: 
         x={x}
         y={centerY + 6}
         textAnchor="middle"
-        className="fill-on-surface"
+        className={fillClass}
         style={{ fontSize: FONT_SIZE * STAFF_SCALE, fontWeight: 500 }}
       >
         {accidental}{note.degree}
@@ -197,7 +242,7 @@ function renderNote(slot: NoteSlot, centerY: number, lyricY: number, lowerDotY: 
             y1={centerY + 14}
             x2={x + 10 * STAFF_SCALE}
             y2={centerY + 14}
-            stroke="#1F2937"
+            stroke={isHovered ? "#2563EB" : "#1F2937"}
             strokeWidth={1.5}
           />
           {hasSixteenth && (
@@ -206,7 +251,7 @@ function renderNote(slot: NoteSlot, centerY: number, lyricY: number, lowerDotY: 
               y1={centerY + 19}
               x2={x + 10 * STAFF_SCALE}
               y2={centerY + 19}
-              stroke="#1F2937"
+              stroke={isHovered ? "#2563EB" : "#1F2937"}
               strokeWidth={1.5}
             />
           )}
@@ -215,7 +260,7 @@ function renderNote(slot: NoteSlot, centerY: number, lyricY: number, lowerDotY: 
 
       {/* Dotted */}
       {note.duration.dotted && (
-        <circle cx={x + 14 * STAFF_SCALE} cy={centerY + 4} r={2 * STAFF_SCALE} className="fill-on-surface" />
+        <circle cx={x + 14 * STAFF_SCALE} cy={centerY + 4} r={2 * STAFF_SCALE} className={fillClass} />
       )}
 
       {/* Tie / sustain line for half / whole */}
@@ -225,7 +270,7 @@ function renderNote(slot: NoteSlot, centerY: number, lyricY: number, lowerDotY: 
           y1={centerY + 16}
           x2={x + 8 * STAFF_SCALE}
           y2={centerY + 16}
-          stroke="#1F2937"
+          stroke={isHovered ? "#2563EB" : "#1F2937"}
           strokeWidth={1}
         />
       )}
@@ -236,7 +281,7 @@ function renderNote(slot: NoteSlot, centerY: number, lyricY: number, lowerDotY: 
           y1={centerY + 21}
           x2={x + 8 * STAFF_SCALE}
           y2={centerY + 21}
-          stroke="#1F2937"
+          stroke={isHovered ? "#2563EB" : "#1F2937"}
           strokeWidth={1}
         />
       )}

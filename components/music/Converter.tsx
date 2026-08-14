@@ -8,6 +8,8 @@ import Footer from "@/components/layout/Footer";
 import JianpuRenderer, { JianpuRendererRef } from "./JianpuRenderer";
 import StaffRenderer, { StaffRendererRef } from "./StaffRenderer";
 import ExportToolbar from "./ExportToolbar";
+import SyntaxGuide from "./SyntaxGuide";
+import KeyHint from "./KeyHint";
 import Link from "next/link";
 
 const KEYS = ["C", "G", "D", "F", "Bb"] as const;
@@ -33,7 +35,7 @@ export interface ConverterLocale {
 
 const EN_LOCALE: ConverterLocale = {
   title: "Enter Numbered Notation",
-  subtitle: "Type your music numbers below to generate staff notation instantly.",
+  subtitle: "Type your music numbers below to generate staff notation instantly. Staff → Numbered is coming soon.",
   keyLabel: "Key",
   timeLabel: "Time",
   tempoLabel: "Tempo",
@@ -50,7 +52,7 @@ const EN_LOCALE: ConverterLocale = {
 
 export const ZH_LOCALE: ConverterLocale = {
   title: "输入简谱",
-  subtitle: "在下方输入数字简谱，即可自动生成五线谱。",
+  subtitle: "在下方输入数字简谱，即可自动生成五线谱。五线谱转简谱功能即将上线。",
   keyLabel: "调号",
   timeLabel: "拍号",
   tempoLabel: "速度",
@@ -163,6 +165,8 @@ export default function Converter({ locale = "en" }: ConverterProps) {
               </div>
             </div>
 
+            <KeyHint keyTonic={key} locale={locale} />
+
             <div className="flex-grow flex flex-col gap-2">
               <textarea
                 value={source}
@@ -178,6 +182,8 @@ export default function Converter({ locale = "en" }: ConverterProps) {
               />
               <p className="text-xs text-on-surface-variant">{t.syntaxHint}</p>
             </div>
+
+            <SyntaxGuide locale={locale} />
 
             <div className="flex items-center justify-between pt-2">
               <button
@@ -240,6 +246,9 @@ export default function Converter({ locale = "en" }: ConverterProps) {
                   </div>
                 )}
               </div>
+              <p className="text-xs text-on-surface-variant text-center">
+                {locale === "zh" ? "提示：鼠标悬停在音符上可查看简谱与五线谱的对应关系。" : "Tip: hover over a note to see its match in the other notation."}
+              </p>
             </div>
           </section>
         </div>

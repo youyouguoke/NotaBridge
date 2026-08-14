@@ -43,7 +43,7 @@ export default function ComparePage() {
                   {item.time}
                 </span>
                 <span className="text-xs font-medium px-2 py-1 bg-secondary-container rounded text-on-secondary-container">
-                  {item.status}
+                  {item.status === "Public Domain" ? "Public Domain" : "Traditional / Public Domain"}
                 </span>
               </div>
               <Link

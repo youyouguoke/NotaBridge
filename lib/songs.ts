@@ -61,7 +61,7 @@ export const SONGS: Song[] = [
     tempo: 100,
     notation: "1 2 3 1 | 1 2 3 1 | 3 4 5 - | 3 4 5 -",
     lyrics: "两 只 老 虎 | 两 只 老 虎 | 跑 得 快 跑 得 快 | 一 只 没 有 眼 睛",
-    status: "Traditional",
+    status: "Public Domain",
     tags: ["children", "chinese", "beginner"],
   },
   {
@@ -74,7 +74,7 @@ export const SONGS: Song[] = [
     tempo: 80,
     notation: "3 3 5 6 | 1' 6 5 - | 3 3 5 6 | 1' 6 5 - | 5 5 3 2 | 1 2 3 - | 2 3 5 3 | 2 1 6 5 -",
     lyrics: "好 一 朵 美 丽 的 茉 莉 花 | 好 一 朵 美 丽 的 茉 莉 花 | 芬 芳 美 丽 满 枝 桠 | 又 香 又 白 人 人 夸",
-    status: "Traditional",
+    status: "Public Domain",
     tags: ["folk", "chinese", "intermediate"],
   },
 ];

@@ -52,7 +52,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               { icon: "keyboard", title: "Enter Numbered Notation", body: "Type your numbered notation quickly using your keyboard." },
-              { icon: "music", title: "Generate Sheet Music", body: "Watch it instantly transform into standard western staff notation." },
+              { icon: "music", title: "Generate Sheet Music", body: "Watch it instantly transform into standard western staff notation.", badge: "Numbered → Staff" },
               { icon: "book", title: "Compare & Learn", body: "See both systems side-by-side to improve your reading skills." },
             ].map((card) => (
               <div
@@ -81,6 +81,11 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-xl font-semibold text-on-surface">{card.title}</h3>
                 <p className="text-base text-on-surface-variant">{card.body}</p>
+                {"badge" in card && (
+                  <span className="inline-flex items-center gap-1 mt-1 text-xs font-medium text-primary bg-primary/5 px-2 py-1 rounded-full">
+                    {card.badge}
+                  </span>
+                )}
               </div>
             ))}
           </div>
@@ -94,7 +99,7 @@ export default function HomePage() {
               Transform numbered notation into staff notation instantly. Our engine handles key signatures, octaves, and rhythms.
             </p>
             <div className="mt-auto pt-4 border-t border-[#E5E7EB] flex items-center justify-between">
-              <span className="text-sm font-medium text-secondary">Accuracy Guaranteed</span>
+              <span className="text-sm font-medium text-secondary">Built for Clear, Reliable Conversion</span>
               <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
@@ -121,7 +126,7 @@ export default function HomePage() {
               </div>
               <div>
                 <h4 className="text-xl font-semibold text-on-surface">Create Printable Scores</h4>
-                <p className="text-base text-on-surface-variant">Export clean music sheets for practice and teaching.</p>
+                <p className="text-base text-on-surface-variant">Preview and export clean numbered scores for practice and teaching.</p>
               </div>
             </div>
           </div>

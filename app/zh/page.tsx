@@ -52,7 +52,7 @@ export default function HomePageZh() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               { icon: "keyboard", title: "输入简谱", body: "使用键盘快速输入数字简谱。" },
-              { icon: "music", title: "生成五线谱", body: "即时转换为标准五线谱格式。" },
+              { icon: "music", title: "生成五线谱", body: "即时转换为标准五线谱格式。", badge: "简谱 → 五线谱" },
               { icon: "book", title: "对照学习", body: "同时查看两种记谱法，提升识谱能力。" },
             ].map((card) => (
               <div
@@ -81,6 +81,11 @@ export default function HomePageZh() {
                 </div>
                 <h3 className="text-xl font-semibold text-on-surface">{card.title}</h3>
                 <p className="text-base text-on-surface-variant">{card.body}</p>
+                {"badge" in card && (
+                  <span className="inline-flex items-center gap-1 mt-1 text-xs font-medium text-primary bg-primary/5 px-2 py-1 rounded-full">
+                    {card.badge}
+                  </span>
+                )}
               </div>
             ))}
           </div>
@@ -94,7 +99,7 @@ export default function HomePageZh() {
               快速准确地将数字简谱翻译成标准五线谱，支持多种调式、八度与节奏。
             </p>
             <div className="mt-auto pt-4 border-t border-[#E5E7EB] flex items-center justify-between">
-              <span className="text-sm font-medium text-secondary">精准转换</span>
+              <span className="text-sm font-medium text-secondary">清晰转换，更适合学习</span>
               <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
@@ -121,7 +126,7 @@ export default function HomePageZh() {
               </div>
               <div>
                 <h4 className="text-xl font-semibold text-on-surface">在线生成乐谱</h4>
-                <p className="text-base text-on-surface-variant">导出高清乐谱，方便练习与教学。</p>
+                <p className="text-base text-on-surface-variant">预览并导出高清简谱图片，方便练习与教学。</p>
               </div>
             </div>
           </div>
