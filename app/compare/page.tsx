@@ -44,6 +44,7 @@ export default function ComparePage() {
                 </span>
                 <span className="text-xs font-medium px-2 py-1 bg-secondary-container rounded text-on-secondary-container">
                   {item.status === "Public Domain" ? "Public Domain" : "Traditional / Public Domain"}
+                  <span className="sr-only">. This example uses a public-domain melody.</span>
                 </span>
               </div>
               <Link

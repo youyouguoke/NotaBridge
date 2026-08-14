@@ -22,7 +22,7 @@ export default function PrivacyPage() {
           </p>
           <h2 className="text-xl font-semibold text-on-surface mt-6">2. Contact Information</h2>
           <p>
-            If you email us at hello@notabridge.com, we will receive only the information you choose to provide, such as your email address and message content.
+            If you email us at hello@notabridge.app, we will receive only the information you choose to provide, such as your email address and message content.
           </p>
           <h2 className="text-xl font-semibold text-on-surface mt-6">3. Cookies</h2>
           <p>

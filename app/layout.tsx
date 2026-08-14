@@ -8,7 +8,7 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://notabridge.com";
+const siteUrl = "https://notabridge.app";
 const siteTitle = "NotaBridge - The easiest bridge between numbered notation and staff notation";
 const siteDescription = "Convert numbered notation into sheet music and learn how both systems represent the same melody.";
 const ogImage = `${siteUrl}/images/logo.jpg`;

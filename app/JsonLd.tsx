@@ -1,5 +1,3 @@
-import Script from "next/script";
-
 interface WebSiteSchema {
   "@context": "https://schema.org";
   "@type": "WebSite";
@@ -44,11 +42,10 @@ export function WebSiteJsonLd({
   };
 
   return (
-    <Script
+    <script
       id="jsonld-website"
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      strategy="beforeInteractive"
     />
   );
 }
@@ -74,11 +71,10 @@ export function OrganizationJsonLd({
   };
 
   return (
-    <Script
+    <script
       id="jsonld-organization"
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-      strategy="beforeInteractive"
     />
   );
 }

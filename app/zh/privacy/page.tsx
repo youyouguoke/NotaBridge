@@ -22,7 +22,7 @@ export default function PrivacyPageZh() {
           </p>
           <h2 className="text-xl font-semibold text-on-surface mt-6">2. 联系方式</h2>
           <p>
-            如果您通过 hello@notabridge.com 联系我们，我们只会收到您主动提供的邮箱地址和消息内容。
+            如果你通过 hello@notabridge.app 联系我们，我们只会收到你主动提供的信息（例如邮箱地址和消息内容）。
           </p>
           <h2 className="text-xl font-semibold text-on-surface mt-6">3. Cookie</h2>
           <p>

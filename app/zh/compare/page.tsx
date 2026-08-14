@@ -44,6 +44,7 @@ export default function ComparePageZh() {
                 </span>
                 <span className="text-xs font-medium px-2 py-1 bg-secondary-container rounded text-on-secondary-container">
                   {item.status === "Public Domain" ? "公有领域" : "传统 / 公有领域"}
+                  <span className="sr-only">。本示例使用公有领域旋律。</span>
                 </span>
               </div>
               <Link

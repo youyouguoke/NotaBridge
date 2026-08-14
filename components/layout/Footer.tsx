@@ -18,7 +18,7 @@ export default function Footer() {
           <Link href={isZh ? "/zh/compare" : "/compare"} className="hover:text-primary transition-colors">
             {isZh ? "谱例库" : "Compare Library"}
           </Link>
-          <a className="hover:text-primary transition-colors" href="mailto:hello@notabridge.com">
+          <a className="hover:text-primary transition-colors" href="mailto:hello@notabridge.app">
             {isZh ? "联系我们" : "Contact"}
           </a>
           <Link href={isZh ? "/zh/privacy" : "/privacy"} className="hover:text-primary transition-colors">
