@@ -119,7 +119,7 @@ const JianpuRenderer = forwardRef<JianpuRendererRef, JianpuRendererProps>(functi
           />
 
           {/* Starting barline */}
-          <Barline x={0} rowHeight={ROW_HEIGHT} isFinal={false} />
+          <Barline x={0} isFinal={false} />
 
           {row.measures.map((measure, mIdx) => (
             <g key={mIdx} transform={`translate(${measure.offsetX}, 0)`}>
@@ -134,7 +134,7 @@ const JianpuRenderer = forwardRef<JianpuRendererRef, JianpuRendererProps>(functi
                   onHover={onHover}
                 />
               ))}
-              <Barline x={measure.width} rowHeight={ROW_HEIGHT} isFinal={mIdx === row.measures.length - 1 && rowIndex === layout.rows.length - 1} />
+              <Barline x={measure.width} isFinal={mIdx === row.measures.length - 1 && rowIndex === layout.rows.length - 1} />
             </g>
           ))}
         </g>
@@ -302,12 +302,16 @@ function NoteElement({ slot, centerY, lyricY, lowerDotY, isHovered, onHover }: N
   );
 }
 
-function Barline({ x, rowHeight, isFinal }: { x: number; rowHeight: number; isFinal: boolean }) {
+const STAFF_LINE_OFFSET = 6;
+const BARLINE_TOP = STAFF_LINE_OFFSET;
+const BARLINE_BOTTOM = ROW_HEIGHT - STAFF_LINE_OFFSET;
+
+function Barline({ x, isFinal }: { x: number; isFinal: boolean }) {
   return (
     <g>
-      <line x1={x} y1={0} x2={x} y2={rowHeight} stroke="#1F2937" strokeWidth={2.5} />
+      <line x1={x} y1={BARLINE_TOP} x2={x} y2={BARLINE_BOTTOM} stroke="#1F2937" strokeWidth={2.5} />
       {isFinal && (
-        <line x1={x + 5} y1={0} x2={x + 5} y2={rowHeight} stroke="#1F2937" strokeWidth={4.5} />
+        <line x1={x + 5} y1={BARLINE_TOP} x2={x + 5} y2={BARLINE_BOTTOM} stroke="#1F2937" strokeWidth={4.5} />
       )}
     </g>
   );

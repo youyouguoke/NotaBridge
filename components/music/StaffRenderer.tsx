@@ -31,6 +31,7 @@ export interface StaffRendererProps {
 const LINE_SPACE = STAFF_LINE_SPACE * STAFF_SCALE;
 const STAFF_TOP = (ROW_HEIGHT - 4 * LINE_SPACE) / 2 - 12;
 const STAFF_BOTTOM = STAFF_TOP + 4 * LINE_SPACE;
+const BARLINE_EXTENSION = 4 * STAFF_SCALE;
 const MIDDLE_LINE = STAFF_TOP + 2 * LINE_SPACE;
 
 const NOTEHEAD_RX = 6.6 * STAFF_SCALE;
@@ -153,7 +154,7 @@ function StaffRow({ row, score, isLastRow, hoveredNoteId, onHover }: StaffRowPro
       <TrebleClef x={CLEF_X} y={MIDDLE_LINE} />
 
       {/* Starting barline */}
-      <Barline x={CLEF_WIDTH - 14} />
+      <Barline x={CLEF_WIDTH - 14} y1={STAFF_TOP - BARLINE_EXTENSION} y2={STAFF_BOTTOM + BARLINE_EXTENSION} />
 
       {row.measures.map((measure, mIdx) => (
         <g key={mIdx} transform={`translate(${measure.offsetX + CLEF_WIDTH}, 0)`}>
@@ -166,7 +167,7 @@ function StaffRow({ row, score, isLastRow, hoveredNoteId, onHover }: StaffRowPro
               onHover={onHover}
             />
           ))}
-          <Barline x={measure.width} isFinal={mIdx === row.measures.length - 1 && isLastRow} />
+          <Barline x={measure.width} y1={STAFF_TOP - BARLINE_EXTENSION} y2={STAFF_BOTTOM + BARLINE_EXTENSION} isFinal={mIdx === row.measures.length - 1 && isLastRow} />
         </g>
       ))}
     </g>
@@ -396,23 +397,23 @@ function Rest({ x, duration }: { x: number; duration: string }) {
   return null;
 }
 
-function Barline({ x, isFinal }: { x: number; isFinal?: boolean }) {
+function Barline({ x, isFinal, y1, y2 }: { x: number; isFinal?: boolean; y1: number; y2: number }) {
   return (
     <g>
       <line
         x1={x}
-        y1={STAFF_TOP - 4 * STAFF_SCALE}
+        y1={y1}
         x2={x}
-        y2={STAFF_BOTTOM + 4 * STAFF_SCALE}
+        y2={y2}
         stroke="#1F2937"
         strokeWidth={STROKE_WIDTH}
       />
       {isFinal && (
         <line
           x1={x + 4 * STAFF_SCALE}
-          y1={STAFF_TOP - 4 * STAFF_SCALE}
+          y1={y1}
           x2={x + 4 * STAFF_SCALE}
-          y2={STAFF_BOTTOM + 4 * STAFF_SCALE}
+          y2={y2}
           stroke="#1F2937"
           strokeWidth={4 * STAFF_SCALE}
         />
