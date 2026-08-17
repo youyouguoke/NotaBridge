@@ -48,13 +48,13 @@ export function parseDuration(raw: string): {
   let consumed = 0;
 
   if (raw[consumed] === "-") {
-    if (raw.length >= 2 && raw[1] === "-") {
-      type = "whole";
-      consumed = 2;
-    } else {
-      type = "half";
-      consumed = 1;
+    // Consume all leading dash tokens. In Jianpu, "1 -" = half note and
+    // "1 - -" / "1 - - -" = whole note. Tokenization may collapse either form
+    // to "1--" or "1---", so we treat any run of 2+ dashes as whole.
+    while (consumed < raw.length && raw[consumed] === "-") {
+      consumed += 1;
     }
+    type = consumed >= 2 ? "whole" : "half";
   }
 
   if (raw[consumed] === ".") {
@@ -133,8 +133,9 @@ function tokenize(source: string): string[] {
     .map((t) => t.trim())
     .filter(Boolean);
 
-  // Collapse standalone "-" / "--" tokens into the preceding note so that
-  // "5 -" becomes "5-" (half note) and "5 - -" becomes "5--" (whole note).
+  // Collapse standalone "-" / "--" tokens into the preceding note or rest so
+  // that "5 -" becomes "5-" (half note) and "5 - -" / "5 - - -" become whole
+  // notes. parseDuration will consume all leading dashes correctly.
   const collapsed: string[] = [];
   for (const token of raw) {
     if (/^-+$/.test(token) && collapsed.length > 0) {
