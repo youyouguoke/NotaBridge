@@ -115,7 +115,7 @@ const StaffRenderer = forwardRef<StaffRendererRef, StaffRendererProps>(function 
           key={rowIndex}
           transform={`translate(${LEFT_MARGIN}, ${HEADER_INFO_HEIGHT + rowIndex * ROW_HEIGHT})`}
         >
-          <StaffRow row={row} score={score} hoveredNoteId={hoveredNoteId} onHover={onHover} />
+          <StaffRow row={row} score={score} isLastRow={rowIndex === layout.rows.length - 1} hoveredNoteId={hoveredNoteId} onHover={onHover} />
         </g>
       ))}
     </svg>
@@ -128,11 +128,12 @@ interface StaffRowProps {
     width: number;
   };
   score: ScoreAST;
+  isLastRow: boolean;
   hoveredNoteId?: string | null;
   onHover?: (id: string | null) => void;
 }
 
-function StaffRow({ row, score, hoveredNoteId, onHover }: StaffRowProps) {
+function StaffRow({ row, score, isLastRow, hoveredNoteId, onHover }: StaffRowProps) {
   return (
     <g>
       {/* Staff lines */}
@@ -165,7 +166,7 @@ function StaffRow({ row, score, hoveredNoteId, onHover }: StaffRowProps) {
               onHover={onHover}
             />
           ))}
-          <Barline x={measure.width} isFinal={mIdx === row.measures.length - 1} />
+          <Barline x={measure.width} isFinal={mIdx === row.measures.length - 1 && isLastRow} />
         </g>
       ))}
     </g>

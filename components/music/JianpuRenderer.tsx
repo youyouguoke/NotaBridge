@@ -134,7 +134,7 @@ const JianpuRenderer = forwardRef<JianpuRendererRef, JianpuRendererProps>(functi
                   onHover={onHover}
                 />
               ))}
-              <Barline x={measure.width} rowHeight={ROW_HEIGHT} isFinal={mIdx === row.measures.length - 1} />
+              <Barline x={measure.width} rowHeight={ROW_HEIGHT} isFinal={mIdx === row.measures.length - 1 && rowIndex === layout.rows.length - 1} />
             </g>
           ))}
         </g>
