@@ -4,7 +4,7 @@ export const ROW_HEIGHT = 120;
 export const TOP_MARGIN = 20;
 export const LEFT_MARGIN = 24;
 export const RIGHT_MARGIN = 24;
-export const MEASURES_PER_ROW = 4;
+export const DEFAULT_MEASURES_PER_ROW = 4;
 export const FONT_SIZE = 22;
 export const LYRIC_FONT_SIZE = 14;
 export const TITLE_HEIGHT = 0; // page-level heading replaces SVG title
@@ -38,6 +38,7 @@ export interface ScoreLayout {
   height: number;
   innerWidth: number;
   beatWidth: number;
+  clefOffset: number;
 }
 
 export function noteDuration(note: NoteOrRest): number {
@@ -58,13 +59,15 @@ export function beatsPerMeasure(time: { numerator: number; denominator: number }
 export function computeScoreLayout(
   score: ScoreAST,
   width: number,
-  hasClef = false
+  _hasClef = false,
+  measuresPerRow = DEFAULT_MEASURES_PER_ROW
 ): ScoreLayout {
   const innerWidth = Math.max(1, width - LEFT_MARGIN - RIGHT_MARGIN);
-  const clefOffset = hasClef ? CLEF_WIDTH : 0;
-  const rowWidth = Math.max(1, innerWidth - clefOffset);
+  // Both jianpu and staff must share the same beat grid to stay aligned.
+  // The staff clef is drawn in the left margin and does not reduce the row width.
+  const rowWidth = innerWidth;
   const beats = beatsPerMeasure(score.timeSignature);
-  const beatsPerRow = beats * MEASURES_PER_ROW;
+  const beatsPerRow = beats * measuresPerRow;
   const beatWidth = beatsPerRow > 0 ? rowWidth / beatsPerRow : 1;
   const measureWidth = beats * beatWidth;
 
@@ -76,7 +79,7 @@ export function computeScoreLayout(
   const rows: MeasureBlock[][] = [];
   let current: MeasureBlock[] = [];
   for (const measure of score.measures) {
-    if (current.length >= MEASURES_PER_ROW) {
+    if (current.length >= measuresPerRow) {
       rows.push(current);
       current = [];
     }
@@ -126,5 +129,6 @@ export function computeScoreLayout(
     height: rows.length * ROW_HEIGHT + TOP_MARGIN + HEADER_INFO_HEIGHT + 8,
     innerWidth,
     beatWidth,
+    clefOffset: _hasClef ? CLEF_WIDTH : 0,
   };
 }

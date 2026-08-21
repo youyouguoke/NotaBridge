@@ -13,6 +13,7 @@ interface SongComparisonProps {
 
 export default function SongComparison({ song, locale = "en" }: SongComparisonProps) {
   const isZh = locale === "zh";
+  const activeLyrics = isZh ? song.lyrics : (song.lyricsEn ?? song.lyrics);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(720);
   const [hoveredNoteId, setHoveredNoteId] = useState<string | null>(null);
@@ -39,9 +40,9 @@ export default function SongComparison({ song, locale = "en" }: SongComparisonPr
       keySignature: { tonic: song.key, mode: "major" },
       timeSignature: { numerator, denominator },
       tempo: song.tempo,
-      lyrics: song.lyrics,
+      lyrics: activeLyrics,
     });
-  }, [song]);
+  }, [song, activeLyrics]);
 
   const handleHover = useCallback((id: string | null) => {
     setHoveredNoteId(id);
@@ -53,14 +54,14 @@ export default function SongComparison({ song, locale = "en" }: SongComparisonPr
         <h2 className="text-xl font-semibold text-on-surface mb-4">
           {isZh ? "简谱" : "Numbered Notation"}
         </h2>
-        <JianpuRenderer score={score} width={width} hoveredNoteId={hoveredNoteId} onHover={handleHover} />
+        <JianpuRenderer score={score} width={width} measuresPerRow={song.measuresPerRow} hoveredNoteId={hoveredNoteId} onHover={handleHover} />
       </section>
 
       <section className="bg-white rounded-2xl border border-[#E5E7EB] p-6 shadow-sm">
         <h2 className="text-xl font-semibold text-on-surface mb-4">
           {isZh ? "五线谱" : "Staff Notation"}
         </h2>
-        <StaffRenderer score={score} width={width} hoveredNoteId={hoveredNoteId} onHover={handleHover} />
+        <StaffRenderer score={score} width={width} measuresPerRow={song.measuresPerRow} hoveredNoteId={hoveredNoteId} onHover={handleHover} />
       </section>
 
       <p className="text-xs text-on-surface-variant text-center">
@@ -72,7 +73,7 @@ export default function SongComparison({ song, locale = "en" }: SongComparisonPr
           {isZh ? "完整歌词" : "Full Lyrics"}
         </h2>
         <div className="text-on-surface-variant whitespace-pre-wrap leading-relaxed">
-          {song.lyrics || (isZh ? "（暂无歌词）" : "(No lyrics provided)")}
+          {activeLyrics || (isZh ? "（暂无歌词）" : "(No lyrics provided)")}
         </div>
       </section>
 

@@ -2,11 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+
+function getLocaleHref(pathname: string, isZh: boolean): string {
+  if (isZh) {
+    const withoutPrefix = pathname.replace(/^\/zh/, "");
+    return withoutPrefix || "/";
+  }
+  return `/zh${pathname}`;
+}
 
 export default function Header() {
-  const pathname = usePathname();
-  const isZh = pathname?.startsWith("/zh");
+  const pathname = usePathname() || "/";
+  const isZh = pathname.startsWith("/zh");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -26,8 +34,7 @@ export default function Header() {
     { href: isZh ? "/zh/learn" : "/learn", label: isZh ? "学习" : "Learn" },
   ];
 
-  const localeHref = isZh ? "/" : "/zh";
-  const localeLabel = isZh ? "EN" : "中文";
+  const localeHref = useMemo(() => getLocaleHref(pathname, isZh), [pathname, isZh]);
 
   return (
     <header

@@ -25,6 +25,7 @@ export interface JianpuRendererRef {
 export interface JianpuRendererProps {
   score: ScoreAST;
   width?: number;
+  measuresPerRow?: number;
   hoveredNoteId?: string | null;
   onHover?: (id: string | null) => void;
 }
@@ -38,7 +39,7 @@ function noteId(slot: NoteSlot): string | null {
 }
 
 const JianpuRenderer = forwardRef<JianpuRendererRef, JianpuRendererProps>(function JianpuRendererInner(
-  { score, width = 720, hoveredNoteId, onHover },
+  { score, width = 720, measuresPerRow, hoveredNoteId, onHover },
   ref
 ) {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -79,7 +80,7 @@ const JianpuRenderer = forwardRef<JianpuRendererRef, JianpuRendererProps>(functi
     },
   }));
 
-  const layout = computeScoreLayout(score, width, false);
+  const layout = computeScoreLayout(score, width, false, measuresPerRow);
   const centerY = ROW_HEIGHT / 2 - 6;
   const lyricY = centerY + 30 * STAFF_SCALE;
   const lowerDotY = centerY + 20 * STAFF_SCALE;
@@ -127,6 +128,7 @@ const JianpuRenderer = forwardRef<JianpuRendererRef, JianpuRendererProps>(functi
                 <NoteElement
                   key={`note-${index}-${slot.x}`}
                   slot={slot}
+                  beatWidth={layout.beatWidth}
                   centerY={centerY}
                   lyricY={lyricY}
                   lowerDotY={lowerDotY}
@@ -134,6 +136,7 @@ const JianpuRenderer = forwardRef<JianpuRendererRef, JianpuRendererProps>(functi
                   onHover={onHover}
                 />
               ))}
+              <SlurArcs slots={measure.notes} centerY={centerY} beatWidth={layout.beatWidth} />
               <Barline x={measure.width} isFinal={mIdx === row.measures.length - 1 && rowIndex === layout.rows.length - 1} />
             </g>
           ))}
@@ -145,6 +148,7 @@ const JianpuRenderer = forwardRef<JianpuRendererRef, JianpuRendererProps>(functi
 
 interface NoteElementProps {
   slot: NoteSlot;
+  beatWidth: number;
   centerY: number;
   lyricY: number;
   lowerDotY: number;
@@ -152,17 +156,22 @@ interface NoteElementProps {
   onHover?: (id: string | null) => void;
 }
 
-function NoteElement({ slot, centerY, lyricY, lowerDotY, isHovered, onHover }: NoteElementProps) {
-  const { item, x } = slot;
+function NoteElement({ slot, beatWidth, centerY, lyricY, lowerDotY, isHovered, onHover }: NoteElementProps) {
+  const { item, x, duration } = slot;
   const id = noteId(slot);
   const handleEnter = () => id && onHover?.(id);
   const handleLeave = () => onHover?.(null);
+
+  // For longer notes, shift the number to the left so the whole symbol occupies
+  // its full rhythmic width like standard Jianpu: 3 -, 1 - - -.
+  // Do not shift for durations <= 1 quarter note.
+  const noteX = duration > 1 ? x - ((duration - 1) * beatWidth) / 2 : x;
 
   if (!isNote(item)) {
     return (
       <g key={`rest-${x}`}>
         <text
-          x={x}
+          x={noteX}
           y={centerY + 6}
           textAnchor="middle"
           className="fill-on-surface"
@@ -185,6 +194,9 @@ function NoteElement({ slot, centerY, lyricY, lowerDotY, isHovered, onHover }: N
   const hasWhole = note.duration.type === "whole";
   const fillClass = isHovered ? "fill-primary" : "fill-on-surface";
 
+  // Horizontal dash for half/whole notes: each "-" occupies one beat width.
+  const dashCount = Math.max(0, Math.round((duration - 1) / 1)); // quarter units
+
   return (
     <g
       key={`note-${x}`}
@@ -194,7 +206,7 @@ function NoteElement({ slot, centerY, lyricY, lowerDotY, isHovered, onHover }: N
     >
       {isHovered && (
         <circle
-          cx={x}
+          cx={noteX}
           cy={centerY + 6}
           r={22}
           className="fill-primary/10"
@@ -205,7 +217,7 @@ function NoteElement({ slot, centerY, lyricY, lowerDotY, isHovered, onHover }: N
       {Array.from({ length: upperDots }).map((_, i) => (
         <circle
           key={`u-${i}`}
-          cx={x}
+          cx={noteX}
           cy={centerY - 22 * STAFF_SCALE - i * 8 * STAFF_SCALE}
           r={DOT_SIZE / 2}
           className={fillClass}
@@ -216,7 +228,7 @@ function NoteElement({ slot, centerY, lyricY, lowerDotY, isHovered, onHover }: N
       {Array.from({ length: lowerDots }).map((_, i) => (
         <circle
           key={`l-${i}`}
-          cx={x}
+          cx={noteX}
           cy={lowerDotY + 8 * STAFF_SCALE + i * 8 * STAFF_SCALE}
           r={DOT_SIZE / 2}
           className={fillClass}
@@ -225,7 +237,7 @@ function NoteElement({ slot, centerY, lyricY, lowerDotY, isHovered, onHover }: N
 
       {/* Accidental + Degree number */}
       <text
-        x={x}
+        x={noteX}
         y={centerY + 6}
         textAnchor="middle"
         className={fillClass}
@@ -238,18 +250,18 @@ function NoteElement({ slot, centerY, lyricY, lowerDotY, isHovered, onHover }: N
       {(hasEighth || hasSixteenth) && (
         <>
           <line
-            x1={x - 10 * STAFF_SCALE}
+            x1={noteX - 10 * STAFF_SCALE}
             y1={centerY + 14}
-            x2={x + 10 * STAFF_SCALE}
+            x2={noteX + 10 * STAFF_SCALE}
             y2={centerY + 14}
             stroke={isHovered ? "#2563EB" : "#1F2937"}
             strokeWidth={1.5}
           />
           {hasSixteenth && (
             <line
-              x1={x - 10 * STAFF_SCALE}
+              x1={noteX - 10 * STAFF_SCALE}
               y1={centerY + 19}
-              x2={x + 10 * STAFF_SCALE}
+              x2={noteX + 10 * STAFF_SCALE}
               y2={centerY + 19}
               stroke={isHovered ? "#2563EB" : "#1F2937"}
               strokeWidth={1.5}
@@ -260,36 +272,30 @@ function NoteElement({ slot, centerY, lyricY, lowerDotY, isHovered, onHover }: N
 
       {/* Dotted */}
       {note.duration.dotted && (
-        <circle cx={x + 14 * STAFF_SCALE} cy={centerY + 4} r={2 * STAFF_SCALE} className={fillClass} />
+        <circle cx={noteX + 14 * STAFF_SCALE} cy={centerY + 4} r={2 * STAFF_SCALE} className={fillClass} />
       )}
 
-      {/* Tie / sustain line for half / whole */}
-      {(hasHalf || hasWhole) && (
-        <line
-          x1={x - 8 * STAFF_SCALE}
-          y1={centerY + 16}
-          x2={x + 8 * STAFF_SCALE}
-          y2={centerY + 16}
-          stroke={isHovered ? "#2563EB" : "#1F2937"}
-          strokeWidth={1}
-        />
-      )}
-
-      {hasWhole && (
-        <line
-          x1={x - 8 * STAFF_SCALE}
-          y1={centerY + 21}
-          x2={x + 8 * STAFF_SCALE}
-          y2={centerY + 21}
-          stroke={isHovered ? "#2563EB" : "#1F2937"}
-          strokeWidth={1}
-        />
-      )}
+      {/* Sustain dashes for half / whole notes */}
+      {(hasHalf || hasWhole) &&
+        Array.from({ length: dashCount }).map((_, i) => {
+          const dashX = noteX + (i + 1) * beatWidth;
+          return (
+            <line
+              key={`dash-${i}`}
+              x1={dashX - 8 * STAFF_SCALE}
+              y1={centerY - 6}
+              x2={dashX + 8 * STAFF_SCALE}
+              y2={centerY - 6}
+              stroke={isHovered ? "#2563EB" : "#1F2937"}
+              strokeWidth={1.5}
+            />
+          );
+        })}
 
       {/* Lyric */}
       {note.lyric && (
         <text
-          x={x}
+          x={noteX}
           y={lyricY}
           textAnchor="middle"
           className="fill-secondary"
@@ -305,6 +311,44 @@ function NoteElement({ slot, centerY, lyricY, lowerDotY, isHovered, onHover }: N
 const STAFF_LINE_OFFSET = 6;
 const BARLINE_TOP = STAFF_LINE_OFFSET;
 const BARLINE_BOTTOM = ROW_HEIGHT - STAFF_LINE_OFFSET;
+
+function SlurArcs({ slots, centerY, beatWidth }: { slots: NoteSlot[]; centerY: number; beatWidth: number }) {
+  const arcs: { x1: number; x2: number }[] = [];
+  for (let i = 0; i < slots.length - 1; i++) {
+    const item = slots[i].item;
+    if (isNote(item) && item.slur) {
+      const d1 = slots[i].duration;
+      const d2 = slots[i + 1].duration;
+      // Use the same visual center as the rendered notehead.
+      const x1 = d1 > 1 ? slots[i].x - ((d1 - 1) * beatWidth) / 2 : slots[i].x;
+      const x2 = d2 > 1 ? slots[i + 1].x - ((d2 - 1) * beatWidth) / 2 : slots[i + 1].x;
+      arcs.push({ x1, x2 });
+    }
+  }
+  if (arcs.length === 0) return null;
+  return (
+    <g>
+      {arcs.map(({ x1, x2 }, i) => {
+        const midX = (x1 + x2) / 2;
+        const span = Math.abs(x2 - x1);
+        const height = Math.min(10, Math.max(5, span * 0.15));
+        // Slur above the numbers, clear of any octave dots.
+        const y = centerY - 30 * STAFF_SCALE;
+        const d = `M ${x1} ${y} Q ${midX} ${y - height} ${x2} ${y}`;
+        return (
+          <path
+            key={`slur-${i}`}
+            d={d}
+            fill="none"
+            stroke="#1F2937"
+            strokeWidth={1.3}
+            strokeLinecap="round"
+          />
+        );
+      })}
+    </g>
+  );
+}
 
 function Barline({ x, isFinal }: { x: number; isFinal: boolean }) {
   return (

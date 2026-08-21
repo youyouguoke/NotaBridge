@@ -1,13 +1,12 @@
 "use client";
 
 import { useRef, useImperativeHandle, forwardRef } from "react";
-import { ScoreAST, isNote, NoteOrRest } from "@/lib/music-engine/ast/types";
+import { ScoreAST, isNote, NoteOrRest, KeySignature as KeySignatureType } from "@/lib/music-engine/ast/types";
 import { degreeToMidi } from "@/lib/music-engine/parser/parser";
 import {
   computeScoreLayout,
   ROW_HEIGHT,
   LEFT_MARGIN,
-  RIGHT_MARGIN,
   HEADER_INFO_HEIGHT,
   LYRIC_FONT_SIZE,
   NoteSlot,
@@ -24,6 +23,7 @@ export interface StaffRendererRef {
 export interface StaffRendererProps {
   score: ScoreAST;
   width?: number;
+  measuresPerRow?: number;
   hoveredNoteId?: string | null;
   onHover?: (id: string | null) => void;
 }
@@ -37,7 +37,7 @@ const MIDDLE_LINE = STAFF_TOP + 2 * LINE_SPACE;
 const NOTEHEAD_RX = 6.6 * STAFF_SCALE;
 const NOTEHEAD_RY = 4.6 * STAFF_SCALE;
 const NOTEHEAD_ROTATE = -16;
-const STEM_ATTACHMENT_OFFSET = 8.2 * STAFF_SCALE;
+const STEM_ATTACHMENT_OFFSET = 7.2 * STAFF_SCALE;
 const STEM_LENGTH = 30 * STAFF_SCALE;
 const STROKE_WIDTH = 2.5 * STAFF_SCALE;
 const THIN_STROKE_WIDTH = 1.5 * STAFF_SCALE;
@@ -50,7 +50,7 @@ function noteId(slot: NoteSlot): string | null {
 }
 
 const StaffRenderer = forwardRef<StaffRendererRef, StaffRendererProps>(function StaffRendererInner(
-  { score, width = 720, hoveredNoteId, onHover },
+  { score, width = 720, measuresPerRow, hoveredNoteId, onHover },
   ref
 ) {
   const svgRef = useRef<SVGSVGElement>(null);
@@ -90,7 +90,7 @@ const StaffRenderer = forwardRef<StaffRendererRef, StaffRendererProps>(function 
     },
   }));
 
-  const layout = computeScoreLayout(score, width, true);
+  const layout = computeScoreLayout(score, width, true, measuresPerRow);
 
   return (
     <svg
@@ -153,11 +153,14 @@ function StaffRow({ row, score, isLastRow, hoveredNoteId, onHover }: StaffRowPro
       {/* Treble clef */}
       <TrebleClef x={CLEF_X} y={MIDDLE_LINE} />
 
+      {/* Key signature */}
+      <KeySignature keySignature={score.keySignature} x={CLEF_X + 14 * STAFF_SCALE} />
+
       {/* Starting barline */}
-      <Barline x={CLEF_WIDTH - 14} y1={STAFF_TOP - BARLINE_EXTENSION} y2={STAFF_BOTTOM + BARLINE_EXTENSION} />
+      <Barline x={0} y1={STAFF_TOP - BARLINE_EXTENSION} y2={STAFF_BOTTOM + BARLINE_EXTENSION} />
 
       {row.measures.map((measure, mIdx) => (
-        <g key={mIdx} transform={`translate(${measure.offsetX + CLEF_WIDTH}, 0)`}>
+        <g key={mIdx} transform={`translate(${measure.offsetX}, 0)`}>
           {measure.notes.map((slot, index) => (
             <StaffNote
               key={`note-${index}-${slot.x}`}
@@ -167,6 +170,7 @@ function StaffRow({ row, score, isLastRow, hoveredNoteId, onHover }: StaffRowPro
               onHover={onHover}
             />
           ))}
+          <StaffSlurArcs slots={measure.notes} score={score} />
           <Barline x={measure.width} y1={STAFF_TOP - BARLINE_EXTENSION} y2={STAFF_BOTTOM + BARLINE_EXTENSION} isFinal={mIdx === row.measures.length - 1 && isLastRow} />
         </g>
       ))}
@@ -199,18 +203,19 @@ function midiToStaffY(midi: number): number {
 
 function needsLedgerLine(midi: number): boolean {
   const y = midiToStaffY(midi);
-  return y < STAFF_TOP - 0.5 * LINE_SPACE || y > STAFF_BOTTOM + 0.5 * LINE_SPACE;
+  if (y >= STAFF_TOP - 0.001 && y <= STAFF_BOTTOM + 0.001) {
+    return false;
+  }
+  const n = Math.round((y - STAFF_TOP) / (LINE_SPACE / 2));
+  const lineY = STAFF_TOP + n * (LINE_SPACE / 2);
+  return Math.abs(y - lineY) < 0.25 * (LINE_SPACE / 2) && n % 2 === 0;
 }
 
 function ledgerLineY(midi: number): number | null {
   const y = midiToStaffY(midi);
-  if (y > STAFF_BOTTOM + 0.5 * LINE_SPACE) {
-    return STAFF_BOTTOM + LINE_SPACE;
-  }
-  if (y < STAFF_TOP - 0.5 * LINE_SPACE) {
-    return STAFF_TOP - LINE_SPACE;
-  }
-  return null;
+  const n = Math.round((y - STAFF_TOP) / (LINE_SPACE / 2));
+  if (n % 2 !== 0) return null;
+  return STAFF_TOP + n * (LINE_SPACE / 2);
 }
 
 function TrebleClef({ x, y }: { x: number; y: number }) {
@@ -268,12 +273,12 @@ function StaffNote({ slot, score, isHovered, onHover }: StaffNoteProps) {
       )}
       {needsLedgerLine(midi) && (
         <line
-          x1={x - NOTEHEAD_RX - 1}
+          x1={x - NOTEHEAD_RX - 4}
           y1={ledgerLineY(midi) ?? y}
-          x2={x + NOTEHEAD_RX + 1}
+          x2={x + NOTEHEAD_RX + 4}
           y2={ledgerLineY(midi) ?? y}
           stroke={strokeColor}
-          strokeWidth={THIN_STROKE_WIDTH}
+          strokeWidth={STROKE_WIDTH}
         />
       )}
 
@@ -316,6 +321,44 @@ function StaffNote({ slot, score, isHovered, onHover }: StaffNoteProps) {
   );
 }
 
+function StaffSlurArcs({ slots, score }: { slots: NoteSlot[]; score: ScoreAST }) {
+  const arcs: { x1: number; y1: number; x2: number; y2: number; stemUp: boolean }[] = [];
+  for (let i = 0; i < slots.length - 1; i++) {
+    const item = slots[i].item;
+    if (isNote(item) && item.slur) {
+      const next = slots[i + 1].item;
+      if (isNote(next)) {
+        const y1 = midiToStaffY(degreeToMidi(item.degree, item.octave, score.keySignature));
+        const y2 = midiToStaffY(degreeToMidi(next.degree, next.octave, score.keySignature));
+        arcs.push({ x1: slots[i].x, y1, x2: slots[i + 1].x, y2, stemUp: y1 > MIDDLE_LINE });
+      }
+    }
+  }
+  if (arcs.length === 0) return null;
+  return (
+    <g>
+      {arcs.map(({ x1, y1, x2, y2, stemUp }, i) => {
+        const midX = (x1 + x2) / 2;
+        const height = Math.max(12, Math.abs(x2 - x1) * 0.3);
+        const baseY = stemUp ? Math.min(y1, y2) - STEM_LENGTH - 4 * STAFF_SCALE : Math.max(y1, y2) + STEM_LENGTH + 4 * STAFF_SCALE;
+        const d = stemUp
+          ? `M ${x1} ${baseY} Q ${midX} ${baseY - height} ${x2} ${baseY}`
+          : `M ${x1} ${baseY} Q ${midX} ${baseY + height} ${x2} ${baseY}`;
+        return (
+          <path
+            key={`staff-slur-${i}`}
+            d={d}
+            fill="none"
+            stroke="#1F2937"
+            strokeWidth={1.8}
+            strokeLinecap="round"
+          />
+        );
+      })}
+    </g>
+  );
+}
+
 function NoteHead({ x, y, durationType, isHovered }: { x: number; y: number; durationType: string; isHovered?: boolean }) {
   const common = {
     cx: x,
@@ -340,7 +383,11 @@ function NoteHead({ x, y, durationType, isHovered }: { x: number; y: number; dur
 }
 
 function Stem({ x, y1, y2, isHovered }: { x: number; y1: number; y2: number; isHovered?: boolean }) {
-  return <line x1={x} y1={y1} x2={x} y2={y2} stroke={isHovered ? "#2563EB" : "#1F2937"} strokeWidth={STROKE_WIDTH} strokeLinecap="round" />;
+  const overlap = 1.5 * STAFF_SCALE;
+  const direction = y2 > y1 ? 1 : -1;
+  const adjustedY1 = y1 + direction * overlap;
+  const adjustedY2 = y2 - direction * overlap;
+  return <line x1={x} y1={adjustedY1} x2={x} y2={adjustedY2} stroke={isHovered ? "#2563EB" : "#1F2937"} strokeWidth={STROKE_WIDTH} strokeLinecap="round" />;
 }
 
 function Flag({ x, y, stemUp, double, isHovered }: { x: number; y: number; stemUp: boolean; double: boolean; isHovered?: boolean }) {
@@ -395,6 +442,74 @@ function Rest({ x, duration }: { x: number; duration: string }) {
     );
   }
   return null;
+}
+
+function KeySignature({ keySignature, x }: { keySignature: KeySignatureType; x: number }) {
+  const majorSharps = ["F#", "C#", "G#", "D#", "A#", "E#", "B#"];
+  const majorFlats = ["Bb", "Eb", "Ab", "Db", "Gb", "Cb", "Fb"];
+
+  const fifths = keyToFifths(keySignature.tonic, keySignature.mode);
+
+  if (fifths === 0) return null;
+  const isSharp = fifths > 0;
+  const accidentals = (isSharp ? majorSharps : majorFlats).slice(0, Math.abs(fifths));
+
+  // Draw accidentals as flat or sharp text symbols at standard key-signature positions.
+  return (
+    <g>
+      {accidentals.map((name, i) => {
+        const y = keySignatureY(name);
+        return (
+          <text
+            key={name}
+            x={x + i * 10 * STAFF_SCALE}
+            y={y}
+            textAnchor="middle"
+            className="fill-on-surface"
+            style={{ fontSize: 26 * STAFF_SCALE }}
+          >
+            {isSharp ? "♯" : "♭"}
+          </text>
+        );
+      })}
+    </g>
+  );
+}
+
+function keyToFifths(tonic: string, mode: "major" | "minor"): number {
+  const circle = ["C", "G", "D", "A", "E", "B", "F#", "C#", "Ab", "Eb", "Bb", "F"];
+  let index = circle.indexOf(tonic);
+  if (index === -1) return 0;
+  if (mode === "minor") {
+    // Relative major is three semitones up (e.g., D minor -> F major).
+    index = (index + 3 + 12) % 12;
+  }
+  return index <= 6 ? index : index - 12;
+}
+
+function keySignatureY(accidentalName: string): number {
+  // Map each key-signature accidental to the staff position of its natural pitch
+  // using the same coordinate system as noteheads, so the symbol sits on the
+  // correct line or space.
+  const ACCIDENTAL_MIDI: Record<string, number> = {
+    "F#": 80,
+    "C#": 72,
+    "G#": 83,
+    "D#": 75,
+    "A#": 70,
+    "E#": 76,
+    "B#": 71,
+    "Bb": 70,
+    "Eb": 76,
+    "Ab": 81,
+    "Db": 73,
+    "Gb": 66,
+    "Cb": 71,
+    "Fb": 64,
+  };
+  const midi = ACCIDENTAL_MIDI[accidentalName];
+  if (midi === undefined) return STAFF_BOTTOM;
+  return midiToStaffY(midi);
 }
 
 function Barline({ x, isFinal, y1, y2 }: { x: number; isFinal?: boolean; y1: number; y2: number }) {

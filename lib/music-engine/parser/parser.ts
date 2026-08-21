@@ -76,54 +76,62 @@ export function parseDuration(raw: string): {
 }
 
 function parseNote(token: string, errors: string[]): Note | Rest {
-  if (token.startsWith("0")) {
-    const tail = token.slice(1);
+  let slur = false;
+  let workingToken = token;
+  if (workingToken.startsWith("~")) {
+    slur = true;
+    workingToken = workingToken.slice(1);
+  }
+
+  if (workingToken.startsWith("0")) {
+    const tail = workingToken.slice(1);
     const { duration, consumed } = parseDuration(tail);
     if (consumed !== tail.length) {
-      errors.push(`无法识别的休止符 "${token}"`);
+      errors.push(`无法识别的休止符 "${workingToken}"`);
     }
     return { duration } as Rest;
   }
 
   let pos = 0;
   let accidental: Accidental | undefined;
-  if (token[pos] === "#") {
+  if (workingToken[pos] === "#") {
     accidental = "#";
     pos += 1;
-  } else if (token[pos] === "b") {
+  } else if (workingToken[pos] === "b") {
     accidental = "b";
     pos += 1;
   }
 
-  const degreeChar = token[pos];
+  const degreeChar = workingToken[pos];
   if (!degreeChar || !/[1-7]/.test(degreeChar)) {
-    errors.push(`无法识别的音符 "${token}"`);
+    errors.push(`无法识别的音符 "${workingToken}"`);
     return { duration: { type: "quarter" } } as Rest;
   }
   const degree = parseInt(degreeChar, 10) as 1 | 2 | 3 | 4 | 5 | 6 | 7;
   pos += 1;
 
   let octave = 0;
-  while (pos < token.length && token[pos] === "'") {
+  while (pos < workingToken.length && workingToken[pos] === "'") {
     octave += 1;
     pos += 1;
   }
-  while (pos < token.length && token[pos] === ",") {
+  while (pos < workingToken.length && workingToken[pos] === ",") {
     octave -= 1;
     pos += 1;
   }
 
-  const tail = token.slice(pos);
+  const tail = workingToken.slice(pos);
   const { duration, consumed } = parseDuration(tail);
   if (consumed !== tail.length) {
-    errors.push(`无法识别的节奏标记 "${token}"`);
+    errors.push(`无法识别的节奏标记 "${workingToken}"`);
   }
 
   return {
     degree,
     octave,
-    accidental,
     duration,
+    accidental,
+    slur,
   };
 }
 
@@ -147,7 +155,45 @@ function tokenize(source: string): string[] {
     }
     collapsed.push(token);
   }
-  return collapsed;
+
+  // Expand tokens like "3_5_" (two or more notes joined by underlines) into
+  // separate tokens. Each underline indicates the previous note is an eighth
+  // (single) or sixteenth (double underline). A trailing underline starts the
+  // next note with the same duration: "3_5_" -> "3_" "5_", "3__5__" ->
+  // "3__" "5__". This preserves the visual grouping while letting parseNote
+  // handle each pitch independently.
+  // Tokens wrapped in parentheses like "(6_1'_)" indicate a slur: every note
+  // in the group except the last starts a slur to the following note.
+  const expanded: string[] = [];
+  const groupRe = /([#b]?[1-7][',]*)(_?)(_?)/g;
+  for (const token of collapsed) {
+    if (token === "|" || token === "||") {
+      expanded.push(token);
+      continue;
+    }
+
+    const isSlur = token.startsWith("(") && token.endsWith(")");
+    const innerToken = isSlur ? token.slice(1, -1) : token;
+
+    if (!/_/.test(innerToken)) {
+      expanded.push(isSlur ? `~${innerToken}` : innerToken);
+      continue;
+    }
+
+    const matches = Array.from(innerToken.matchAll(groupRe))
+      .map((m) => m[0])
+      .filter((m) => m.length > 0);
+
+    if (matches.length > 1) {
+      for (let i = 0; i < matches.length; i++) {
+        const markSlur = isSlur && i < matches.length - 1;
+        expanded.push(markSlur ? `~${matches[i]}` : matches[i]);
+      }
+    } else {
+      expanded.push(isSlur ? `~${matches[0] || innerToken}` : (matches[0] || innerToken));
+    }
+  }
+  return expanded;
 }
 
 export interface ParseOptions {
@@ -199,9 +245,12 @@ export function parseJianpuWithErrors(source: string, options: ParseOptions = {}
     return { success: false, errors };
   }
 
-  const lines = source.split(/\n/).map((l) => l.trim());
-  const notationLine = lines[0] || "";
-  const lyricLine = options.lyrics ?? lines[1] ?? "";
+  const lines = source.split(/\n/).map((l) => l.trim()).filter(Boolean);
+  // Notation may span multiple lines; treat each line as a separate staff line
+  // and join them into one continuous notation stream. This lets users write
+  // multi-line songs while still pairing lyrics via options.lyrics.
+  const notationLine = lines.join(" ");
+  const lyricLine = options.lyrics ?? "";
 
   // Split lyrics by the same bar separators used in notation, so each measure
   // gets its own lyrics. Within a measure, skip hyphen placeholders (`-`)
@@ -220,30 +269,34 @@ export function parseJianpuWithErrors(source: string, options: ParseOptions = {}
   let current: NoteOrRest[] = [];
   let measureIndex = 0;
   let lyricIndexInMeasure = 0;
+  let skipNextLyric = false;
 
   for (const token of tokens) {
-    if (token === "|") {
+    if (token === "|" || token === "||") {
       measures.push({ index: measureIndex, notes: current });
       measureIndex += 1;
       current = [];
       lyricIndexInMeasure = 0;
+      skipNextLyric = false;
       continue;
     }
 
     const parsed = parseNote(token, errors);
     if ("degree" in parsed && parsed.degree >= 1 && parsed.degree <= 7) {
       const measureLyrics = lyricsByMeasure[measureIndex] ?? [];
-      // Advance lyric pointer, skipping standalone hyphen placeholders.
-      while (
-        lyricIndexInMeasure < measureLyrics.length &&
-        measureLyrics[lyricIndexInMeasure] === "-"
-      ) {
-        lyricIndexInMeasure += 1;
+      if (!skipNextLyric) {
+        while (
+          lyricIndexInMeasure < measureLyrics.length &&
+          measureLyrics[lyricIndexInMeasure] === "-"
+        ) {
+          lyricIndexInMeasure += 1;
+        }
+        if (lyricIndexInMeasure < measureLyrics.length) {
+          parsed.lyric = measureLyrics[lyricIndexInMeasure];
+          lyricIndexInMeasure += 1;
+        }
       }
-      if (lyricIndexInMeasure < measureLyrics.length) {
-        parsed.lyric = measureLyrics[lyricIndexInMeasure];
-        lyricIndexInMeasure += 1;
-      }
+      skipNextLyric = parsed.slur ?? false;
     }
     current.push(parsed);
   }
